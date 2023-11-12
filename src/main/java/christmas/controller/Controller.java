@@ -74,13 +74,15 @@ public class Controller {
             return;
         }
         outputView.printOrders(orders);
-        outputView.printBeforeTotalPrice(orders.getTotalPrice());
+        int beforePrice = orders.getTotalPrice();
+        outputView.printBeforeTotalPrice(beforePrice);
         outputView.printPresentationMenu(presentation.getPresentationName(), presentation.isPresentation(orders));
         outputView.printDayBenefits(benefits.getDayBenefits(orders.getOrderDate()));
         printWeekOrWeekendBenefits(orders);
         outputView.printSpecialDayBenefits(benefits.getSpecialDayBenefits(orders.getOrderDate()));
         outputView.printPresentationBenefits(presentation.getBenefit(orders));
         outputView.printTotalBenefits(benefits.getTotalBenefits(orders) + presentation.getBenefit(orders));
+        outputView.printAfterTotalPrice(beforePrice - benefits.getTotalBenefits(orders));
     }
 
     private void printWeekOrWeekendBenefits(Orders orders) {
