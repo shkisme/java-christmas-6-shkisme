@@ -7,6 +7,9 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getDayBenefits(LocalDate localDate) {
+        if (25 < localDate.getDayOfMonth()) {
+            return 0;
+        }
         return 1000 + (localDate.getDayOfMonth() - 1) * 100;
     }
 
