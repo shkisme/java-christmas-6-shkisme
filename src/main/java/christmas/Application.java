@@ -11,10 +11,12 @@ import christmas.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         MenuRepository menuRepository = new MenuEnumRepository();
-        Menu presentation = menuRepository.findByName("샴페인");
+        Menu presentation = menuRepository.findByName("샴페인")
+                .orElseThrow(IllegalAccessError::new);
         Controller controller = new Controller(new InputView(),
                 new OutputView(),
-                new ChristmasBenefits(presentation));
+                new ChristmasBenefits(presentation),
+                new MenuEnumRepository());
         controller.run();
     }
 }
