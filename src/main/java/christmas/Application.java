@@ -1,6 +1,7 @@
 package christmas;
 
 import christmas.controller.Controller;
+import christmas.dao.badge.BadgeEnumRepository;
 import christmas.dao.menu.MenuEnumRepository;
 import christmas.dao.menu.MenuRepository;
 import christmas.model.benefits.ChristmasBenefits;
@@ -16,7 +17,7 @@ public class Application {
                 .orElseThrow(IllegalAccessError::new);
         Controller controller = new Controller(new InputView(), new OutputView(),
                 new ChristmasBenefits(), new ChristmasPresentation(presentation),
-                new MenuEnumRepository());
+                new MenuEnumRepository(), new BadgeEnumRepository());
         controller.run();
     }
 }

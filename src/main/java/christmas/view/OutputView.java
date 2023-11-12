@@ -1,9 +1,11 @@
 package christmas.view;
 
+import christmas.model.badge.Badge;
 import christmas.model.order.Order;
 import christmas.model.order.Orders;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Optional;
 
 public class OutputView {
 
@@ -20,7 +22,7 @@ public class OutputView {
         printBeforeTotalPrice(orders.getTotalPrice());
         System.out.println("\n<증정 메뉴>\n없음");
         System.out.println("\n<혜택 내역>\n없음");
-        System.out.println("\n<총혜택 금액>\n0원");
+        printTotalBenefits(0);
         printAfterTotalPrice(orders.getTotalPrice());
         System.out.println("\n12월 이벤트 배지\n없음");
     }
@@ -93,5 +95,14 @@ public class OutputView {
     private String getFormattedPrice(int totalPrice) {
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
         return numberFormat.format(totalPrice) + "원";
+    }
+
+    public void printBadge(Optional<Badge> badge) {
+        System.out.println("\n<12월 이벤트 배지>");
+        if (badge.isEmpty()) {
+            System.out.println("없음");
+            return;
+        }
+        System.out.println(badge.get().getName());
     }
 }

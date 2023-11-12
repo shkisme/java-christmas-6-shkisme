@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuRepository;
 import christmas.dto.MenuDto;
 import christmas.model.benefits.Benefits;
@@ -19,14 +20,16 @@ public class Controller {
     private final Benefits benefits;
     private final Presentation presentation;
     private final MenuRepository menuRepository;
+    private final BadgeRepository badgeRepository;
 
     public Controller(InputView inputView, OutputView outputView, Benefits benefits, Presentation presentation,
-                      MenuRepository menuRepository) {
+                      MenuRepository menuRepository, BadgeRepository badgeRepository) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.benefits = benefits;
         this.presentation = presentation;
         this.menuRepository = menuRepository;
+        this.badgeRepository = badgeRepository;
     }
 
     public void run() {
@@ -83,6 +86,8 @@ public class Controller {
         outputView.printPresentationBenefits(presentation.getBenefit(orders));
         outputView.printTotalBenefits(benefits.getTotalBenefits(orders) + presentation.getBenefit(orders));
         outputView.printAfterTotalPrice(beforePrice - benefits.getTotalBenefits(orders));
+        outputView.printBadge(
+                badgeRepository.findByPrice(benefits.getTotalBenefits(orders) + presentation.getBenefit(orders)));
     }
 
     private void printWeekOrWeekendBenefits(Orders orders) {

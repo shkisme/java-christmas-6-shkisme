@@ -7,4 +7,12 @@ public class Badge {
     public Badge(String name) {
         this.name = name;
     }
+
+    public static Badge from(BadgeData badgeData) {
+        return new Badge(badgeData.toString());
+    }
+
+    public String getName() {
+        return name;
+    }
 }
