@@ -1,6 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.dto.MenuDto;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -15,10 +16,10 @@ public class InputView {
     private static final String COUNT_DELIMITER = "-";
 
     public int readDate() {
-        System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
         while (true) {
+            System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
+            String input = Console.readLine().trim();
             try {
-                String input = Console.readLine().trim();
                 validateDate(input);
                 return Integer.parseInt(input);
             } catch (IllegalArgumentException e) {
@@ -47,13 +48,13 @@ public class InputView {
         }
     }
 
-    public String readMenu() {
-        System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+    public List<MenuDto> readMenu() {
         while (true) {
+            System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+            String input = Console.readLine().trim();
             try {
-                String input = Console.readLine().trim();
                 validateMenu(input);
-                return input;
+                return getMenuDtos(input);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -110,6 +111,13 @@ public class InputView {
     private List<String> getMenuNames(String input) {
         return Arrays.stream(input.split(MENU_DELIMITER))
                 .map(menu -> menu.split(COUNT_DELIMITER)[0])
+                .toList();
+    }
+
+    private List<MenuDto> getMenuDtos(String input) {
+        return Arrays.stream(input.split(MENU_DELIMITER))
+                .map(menu -> menu.split(COUNT_DELIMITER))
+                .map(menu -> MenuDto.of(menu[0], Integer.parseInt(menu[1])))
                 .toList();
     }
 }
