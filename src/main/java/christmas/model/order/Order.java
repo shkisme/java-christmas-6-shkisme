@@ -10,4 +10,8 @@ public class Order {
         this.menu = menu;
         this.count = count;
     }
+
+    public boolean isType(String type) {
+        return menu.isType(type);
+    }
 }

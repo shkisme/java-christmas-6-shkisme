@@ -8,7 +8,16 @@ public class Orders {
     private final LocalDate orderDate;
 
     public Orders(List<Order> orders, LocalDate orderDate) {
+        validateOrder(orders);
         this.orders = orders;
         this.orderDate = orderDate;
+    }
+
+    private void validateOrder(List<Order> orders) {
+        boolean isAllDrink = orders.stream()
+                .allMatch(order -> order.isType("음료"));
+        if (isAllDrink) {
+            throw new IllegalArgumentException("음료만 주문하여 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
     }
 }

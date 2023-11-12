@@ -1,5 +1,7 @@
 package christmas.model.menu;
 
+import java.util.Objects;
+
 public class Menu {
     private final String name;
     private final int price;
@@ -15,5 +17,9 @@ public class Menu {
         return new Menu(menuData.getName(),
                 menuData.getPrice(),
                 menuData.getType());
+    }
+
+    public boolean isType(String type) {
+        return Objects.equals(this.type, type);
     }
 }
