@@ -18,8 +18,8 @@ public class Controller {
 
     public void run() {
         outputView.printStartMessage();
-        inputView.readDate();
-        inputView.readMenu();
+        int date = inputView.readDate();
+        String menu = inputView.readMenu();
 
         outputView.printResultMessage();
     }
