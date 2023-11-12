@@ -22,14 +22,22 @@ public class Orders {
         }
     }
 
-    public List<Order> getOrders() {
-        return Collections.unmodifiableList(orders);
-    }
-
     public int getTotalPrice() {
         return orders.stream()
                 .map(Order::getPrice)
                 .mapToInt(Integer::intValue)
                 .sum();
+    }
+
+    public boolean isNoBenefits() {
+        return getTotalPrice() < 10_000;
+    }
+
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders);
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
     }
 }

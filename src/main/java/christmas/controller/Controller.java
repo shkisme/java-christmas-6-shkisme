@@ -71,8 +71,13 @@ public class Controller {
 
     private void printResult(Orders orders) {
         outputView.printResultMessage();
+        if (orders.isNoBenefits()) {
+            outputView.printNoEventResult(orders);
+            return;
+        }
         outputView.printOrders(orders);
         outputView.printBeforeTotalPrice(orders.getTotalPrice());
         outputView.printPresentationMenu(presentation.getPresentationName(), presentation.isPresentation(orders));
+        outputView.printDayBenefit(benefits.getDayBenefits(orders.getOrderDate()));
     }
 }

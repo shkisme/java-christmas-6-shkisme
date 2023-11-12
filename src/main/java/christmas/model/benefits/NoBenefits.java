@@ -3,11 +3,10 @@ package christmas.model.benefits;
 import christmas.model.order.Orders;
 import java.time.LocalDate;
 
-public class ChristmasBenefits implements Benefits {
-
+public class NoBenefits implements Benefits {
     @Override
     public int getDayBenefits(LocalDate localDate) {
-        return 1000 + (localDate.getDayOfMonth() - 1) * 100;
+        return 0;
     }
 
     @Override
