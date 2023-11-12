@@ -1,5 +1,6 @@
 package christmas.model.benefits;
 
+import christmas.model.menu.Menu;
 import christmas.model.order.Orders;
 
 public interface Benefits {
@@ -8,7 +9,7 @@ public interface Benefits {
 
     int getSpecialBenefits(Orders orders);
 
-    int getPresentationBenefits(Orders orders);
+
 
     int getTotalBenefits(Orders orders);
 }

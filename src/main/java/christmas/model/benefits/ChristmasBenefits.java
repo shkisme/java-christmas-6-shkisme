@@ -5,12 +5,6 @@ import christmas.model.order.Orders;
 
 public class ChristmasBenefits implements Benefits {
 
-    private final Menu presentation;
-
-    public ChristmasBenefits(Menu presentation) {
-        this.presentation = presentation;
-    }
-
     public int getChristmasDayBenefits() {
         return 0;
     }
@@ -25,9 +19,12 @@ public class ChristmasBenefits implements Benefits {
         return 0;
     }
 
-    @Override
-    public int getPresentationBenefits(Orders orders) {
-        return 0;
+    public Menu getPresentationMenu() {
+        return null;
+    }
+
+    public boolean isPresentation(Orders orders) {
+        return 120_000 <= orders.getTotalPrice();
     }
 
     @Override
