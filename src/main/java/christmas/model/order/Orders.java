@@ -1,6 +1,7 @@
 package christmas.model.order;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 public class Orders {
@@ -19,5 +20,9 @@ public class Orders {
         if (isAllDrink) {
             throw new IllegalArgumentException("음료만 주문하여 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
+    }
+
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders);
     }
 }

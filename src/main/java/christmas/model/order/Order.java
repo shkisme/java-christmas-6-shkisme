@@ -14,4 +14,12 @@ public class Order {
     public boolean isType(String type) {
         return menu.isType(type);
     }
+
+    public String getMenuName() {
+        return menu.getName();
+    }
+
+    public int getCount() {
+        return count;
+    }
 }

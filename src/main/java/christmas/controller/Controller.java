@@ -67,5 +67,6 @@ public class Controller {
 
     private void printResult(Orders orders) {
         outputView.printResultMessage();
+        outputView.printOrders(orders);
     }
 }

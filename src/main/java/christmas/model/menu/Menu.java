@@ -22,4 +22,8 @@ public class Menu {
     public boolean isType(String type) {
         return Objects.equals(this.type, type);
     }
+
+    public String getName() {
+        return name;
+    }
 }
