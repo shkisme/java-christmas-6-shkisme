@@ -77,6 +77,11 @@ public class OutputView {
         printPrice(benefit);
     }
 
+    public void printTotalBenefits(int totalBenefits) {
+        System.out.println("\n<총혜택 금액>");
+        printPrice(totalBenefits);
+    }
+
     private void printPrice(int price) {
         if (price == 0) {
             System.out.println("없음");

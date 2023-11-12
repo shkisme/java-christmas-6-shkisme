@@ -35,6 +35,11 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getTotalBenefits(Orders orders) {
-        return 0;
+        if (orders.isWeekday()) {
+            return getDayBenefits(orders.getOrderDate()) + getWeekdayBenefits(orders) + getSpecialDayBenefits(
+                    orders.getOrderDate());
+        }
+        return getDayBenefits(orders.getOrderDate()) + getWeekendDayBenefits(orders) + getSpecialDayBenefits(
+                orders.getOrderDate());
     }
 }

@@ -16,8 +16,11 @@ public class ChristmasPresentation implements Presentation {
     }
 
     @Override
-    public int getBenefit() {
-        return presentation.getPrice();
+    public int getBenefit(Orders orders) {
+        if (isPresentation(orders)) {
+            return presentation.getPrice();
+        }
+        return 0;
     }
 
     @Override

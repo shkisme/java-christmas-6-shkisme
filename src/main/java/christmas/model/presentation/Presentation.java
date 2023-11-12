@@ -6,7 +6,7 @@ public interface Presentation {
 
     String getPresentationName();
 
-    int getBenefit();
+    int getBenefit(Orders orders);
 
     boolean isPresentation(Orders orders);
 }
