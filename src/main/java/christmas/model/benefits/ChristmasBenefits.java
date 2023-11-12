@@ -1,5 +1,7 @@
 package christmas.model.benefits;
 
+import static java.time.DayOfWeek.SUNDAY;
+
 import christmas.model.order.Orders;
 import java.time.LocalDate;
 
@@ -24,7 +26,10 @@ public class ChristmasBenefits implements Benefits {
     }
 
     @Override
-    public int getSpecialBenefits(Orders orders) {
+    public int getSpecialDayBenefits(LocalDate localDate) {
+        if (localDate.getDayOfWeek() == SUNDAY || localDate.getDayOfMonth() == 25) {
+            return 1000;
+        }
         return 0;
     }
 

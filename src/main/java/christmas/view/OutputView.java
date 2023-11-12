@@ -67,6 +67,11 @@ public class OutputView {
         printPrice(weekendDayBenefits);
     }
 
+    public void printSpecialDayBenefits(int specialDayBenefits) {
+        System.out.print("특별 할인: ");
+        printPrice(specialDayBenefits);
+    }
+
     private void printPrice(int price) {
         if (price == 0) {
             System.out.println("없음");

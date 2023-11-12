@@ -11,7 +11,7 @@ public interface Benefits {
 
     int getWeekendDayBenefits(Orders orders);
 
-    int getSpecialBenefits(Orders orders);
+    int getSpecialDayBenefits(LocalDate localDate);
 
     int getTotalBenefits(Orders orders);
 }
