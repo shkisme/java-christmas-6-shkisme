@@ -31,4 +31,13 @@ public class OutputView {
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
         return numberFormat.format(totalPrice);
     }
+
+    public void printPresentationMenu(String presentationName, boolean isPresentation) {
+        System.out.println("\n<증정 메뉴>");
+        if (isPresentation) {
+            System.out.println(presentationName + " 1개");
+            return;
+        }
+        System.out.println("없음");
+    }
 }

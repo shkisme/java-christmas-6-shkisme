@@ -8,6 +8,7 @@ import christmas.model.benefits.Benefits;
 import christmas.model.menu.Menu;
 import christmas.model.order.Order;
 import christmas.model.order.Orders;
+import christmas.model.presentation.Presentation;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.time.LocalDate;
@@ -18,12 +19,15 @@ public class Controller {
     private final InputView inputView;
     private final OutputView outputView;
     private final Benefits benefits;
+    private final Presentation presentation;
     private final MenuRepository menuRepository;
 
-    public Controller(InputView inputView, OutputView outputView, Benefits benefits, MenuRepository menuRepository) {
+    public Controller(InputView inputView, OutputView outputView, Benefits benefits, Presentation presentation,
+                      MenuRepository menuRepository) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.benefits = benefits;
+        this.presentation = presentation;
         this.menuRepository = menuRepository;
     }
 
@@ -69,5 +73,6 @@ public class Controller {
         outputView.printResultMessage();
         outputView.printOrders(orders);
         outputView.printBeforeTotalPrice(orders.getTotalPrice());
+        outputView.printPresentationMenu(presentation.getPresentationName(), presentation.isPresentation(orders));
     }
 }
