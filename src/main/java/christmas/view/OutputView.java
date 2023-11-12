@@ -72,6 +72,11 @@ public class OutputView {
         printPrice(specialDayBenefits);
     }
 
+    public void printPresentationBenefits(int benefit) {
+        System.out.print("증정 이벤트: ");
+        printPrice(benefit);
+    }
+
     private void printPrice(int price) {
         if (price == 0) {
             System.out.println("없음");

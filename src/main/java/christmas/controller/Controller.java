@@ -79,6 +79,7 @@ public class Controller {
         outputView.printDayBenefits(benefits.getDayBenefits(orders.getOrderDate()));
         printWeekOrWeekendBenefits(orders);
         outputView.printSpecialDayBenefits(benefits.getSpecialDayBenefits(orders.getOrderDate()));
+        outputView.printPresentationBenefits(presentation.getBenefit());
     }
 
     private void printWeekOrWeekendBenefits(Orders orders) {
