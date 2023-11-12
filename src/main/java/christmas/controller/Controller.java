@@ -29,11 +29,14 @@ public class Controller {
 
     public void run() {
         outputView.printStartMessage();
-        int date = inputView.readDate();
-        LocalDate orderDate = LocalDate.of(2023, DECEMBER, date);
+        LocalDate orderDate = getOrderDate();
         Orders orders = getOrders(orderDate);
+        printResult(orders);
+    }
 
-        outputView.printResultMessage();
+    private LocalDate getOrderDate() {
+        int date = inputView.readDate();
+        return LocalDate.of(2023, DECEMBER, date);
     }
 
     private Orders getOrders(LocalDate orderDate) {
@@ -60,5 +63,9 @@ public class Controller {
     private Menu findMenuByName(String name) {
         return menuRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("메뉴판에 없는 유효하지 않은 주문입니다. 다시 입력해 주세요."));
+    }
+
+    private void printResult(Orders orders) {
+        outputView.printResultMessage();
     }
 }
