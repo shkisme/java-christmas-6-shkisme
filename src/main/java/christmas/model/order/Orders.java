@@ -25,4 +25,11 @@ public class Orders {
     public List<Order> getOrders() {
         return Collections.unmodifiableList(orders);
     }
+
+    public int getTotalPrice() {
+        return orders.stream()
+                .map(Order::getPrice)
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
 }

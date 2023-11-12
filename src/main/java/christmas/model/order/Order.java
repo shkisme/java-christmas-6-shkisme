@@ -11,6 +11,10 @@ public class Order {
         this.count = count;
     }
 
+    public int getPrice() {
+        return menu.getPrice() * count;
+    }
+
     public boolean isType(String type) {
         return menu.isType(type);
     }
