@@ -47,9 +47,11 @@ public class Orders {
     }
 
     public int countByMenuType(String menuType) {
-        return (int) orders.stream()
+        return orders.stream()
                 .filter(order -> order.isType(menuType))
-                .count();
+                .map(Order::getCount)
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     public List<Order> getOrders() {
