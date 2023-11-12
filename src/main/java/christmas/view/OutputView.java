@@ -46,19 +46,33 @@ public class OutputView {
         System.out.println("없음");
     }
 
-    public void printDayBenefit(int dayBenefits) {
+    public void printDayBenefits(int dayBenefits) {
         System.out.println("\n<혜택 내역>");
         System.out.print("크리스마스 디데이 할인: ");
-        if (dayBenefits == 0) {
-            System.out.println("없음");
-            return;
-        }
-        System.out.println("-" + getFormattedPrice(dayBenefits));
+        printPrice(dayBenefits);
     }
 
     public void printAfterTotalPrice(int totalPrice) {
         System.out.println("\n<할인 후 예상 결제 금액>");
         System.out.println(getFormattedPrice(totalPrice));
+    }
+
+    public void printWeekdayBenefits(int weekdayBenefits) {
+        System.out.print("평일 할인: ");
+        printPrice(weekdayBenefits);
+    }
+
+    public void printWeekendDayBenefits(int weekendDayBenefits) {
+        System.out.print("주말 할인: ");
+        printPrice(weekendDayBenefits);
+    }
+
+    private void printPrice(int price) {
+        if (price == 0) {
+            System.out.println("없음");
+            return;
+        }
+        System.out.println("-" + getFormattedPrice(price));
     }
 
     private String getFormattedPrice(int totalPrice) {

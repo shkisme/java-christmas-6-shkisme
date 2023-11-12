@@ -1,7 +1,5 @@
 package christmas.controller;
 
-import static java.util.Calendar.DECEMBER;
-
 import christmas.dao.menu.MenuRepository;
 import christmas.dto.MenuDto;
 import christmas.model.benefits.Benefits;
@@ -40,7 +38,7 @@ public class Controller {
 
     private LocalDate getOrderDate() {
         int date = inputView.readDate();
-        return LocalDate.of(2023, DECEMBER, date);
+        return LocalDate.of(2023, 12, date);
     }
 
     private Orders getOrders(LocalDate orderDate) {
@@ -78,6 +76,15 @@ public class Controller {
         outputView.printOrders(orders);
         outputView.printBeforeTotalPrice(orders.getTotalPrice());
         outputView.printPresentationMenu(presentation.getPresentationName(), presentation.isPresentation(orders));
-        outputView.printDayBenefit(benefits.getDayBenefits(orders.getOrderDate()));
+        outputView.printDayBenefits(benefits.getDayBenefits(orders.getOrderDate()));
+        printWeekOrWeekendBenefits(orders);
+    }
+
+    private void printWeekOrWeekendBenefits(Orders orders) {
+        if (orders.isWeekday()) {
+            outputView.printWeekdayBenefits(benefits.getWeekdayBenefits(orders));
+            return;
+        }
+        outputView.printWeekendDayBenefits(benefits.getWeekendDayBenefits(orders));
     }
 }

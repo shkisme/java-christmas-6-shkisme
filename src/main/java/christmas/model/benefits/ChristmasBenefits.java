@@ -12,7 +12,12 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getWeekdayBenefits(Orders orders) {
-        return 0;
+        return orders.countByMenuType("디저트") * 2023;
+    }
+
+    @Override
+    public int getWeekendDayBenefits(Orders orders) {
+        return orders.countByMenuType("메인") * 2023;
     }
 
     @Override

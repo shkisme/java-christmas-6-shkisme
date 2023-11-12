@@ -1,10 +1,19 @@
 package christmas.model.order;
 
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.SUNDAY;
+import static java.time.DayOfWeek.THURSDAY;
+import static java.time.DayOfWeek.TUESDAY;
+import static java.time.DayOfWeek.WEDNESDAY;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
 public class Orders {
+    private static final List<DayOfWeek> weekday = List.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, SUNDAY);
+
     private final List<Order> orders;
     private final LocalDate orderDate;
 
@@ -31,6 +40,16 @@ public class Orders {
 
     public boolean isNoBenefits() {
         return getTotalPrice() < 10_000;
+    }
+
+    public boolean isWeekday() {
+        return weekday.contains(orderDate.getDayOfWeek());
+    }
+
+    public int countByMenuType(String menuType) {
+        return (int) orders.stream()
+                .filter(order -> order.isType(menuType))
+                .count();
     }
 
     public List<Order> getOrders() {
