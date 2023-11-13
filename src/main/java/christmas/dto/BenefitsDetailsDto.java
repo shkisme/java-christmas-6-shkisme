@@ -1,13 +1,12 @@
 package christmas.dto;
 
 import christmas.model.benefits.Benefits;
-import christmas.model.presentation.Presentation;
 
 public record BenefitsDetailsDto(int dayBenefits,
                                  int weekdayBenefits, int weekendDayBenefits,
                                  int specialDayBenefits, int presentationBenefits) {
-    public static BenefitsDetailsDto of(Benefits benefits, Presentation presentation) {
+    public static BenefitsDetailsDto from(Benefits benefits) {
         return new BenefitsDetailsDto(benefits.getDayBenefits(), benefits.getWeekdayBenefits(),
-                benefits.getWeekendDayBenefits(), benefits.getSpecialDayBenefits(), presentation.getBenefits());
+                benefits.getWeekendDayBenefits(), benefits.getSpecialDayBenefits(), benefits.getPresentationBenefits());
     }
 }

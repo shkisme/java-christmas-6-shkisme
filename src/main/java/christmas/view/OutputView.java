@@ -1,10 +1,16 @@
 package christmas.view;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 import christmas.dto.BenefitsDetailsDto;
+import christmas.dto.BenefitsDto;
 import christmas.model.badge.Badge;
+import christmas.model.menu.Menu;
 import christmas.model.order.Order;
 import christmas.model.order.Orders;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -18,15 +24,6 @@ public class OutputView {
         System.out.println("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
     }
 
-    public void printNoEventResult(Orders orders) {
-        printBeforeTotalPrice(orders.getTotalPrice());
-        printPresentationMenu(Optional.empty());
-        System.out.println("\n<혜택 내역>\n없음");
-        printTotalBenefits(0);
-        printAfterTotalPrice(orders.getTotalPrice());
-        printBadge(Optional.empty());
-    }
-
     public void printOrders(Orders orders) {
         System.out.println("\n<주문 메뉴>");
         for (Order order : orders.getOrders()) {
@@ -34,21 +31,33 @@ public class OutputView {
         }
     }
 
-    public void printBeforeTotalPrice(int totalPrice) {
+    public void printBenefits(BenefitsDto benefitsDto) {
+        printBeforeTotalPrice(benefitsDto.beforeTotalPrice());
+        printPresentationMenu(benefitsDto.presentations());
+
+        printBenefitsDetails(benefitsDto.benefitsDetailsDto());
+
+        printTotalBenefits(benefitsDto.totalBenefits());
+        printAfterTotalPrice(benefitsDto.afterTotalPrice());
+    }
+
+    private void printBeforeTotalPrice(int totalPrice) {
         System.out.println("\n<할인 전 총주문 금액>");
         System.out.println(getFormattedPrice(totalPrice));
     }
 
-    public void printPresentationMenu(Optional<String> presentationName) {
+    private void printPresentationMenu(List<Menu> presentations) {
         System.out.println("\n<증정 메뉴>");
-        if (presentationName.isEmpty()) {
+        if (presentations.isEmpty()) {
             System.out.println("없음");
             return;
         }
-        System.out.println(presentationName.get() + " 1개");
+        presentations.stream()
+                .collect(groupingBy(Menu::getName, counting()))
+                .forEach((name, count) -> System.out.println(name + " " + count + "개"));
     }
 
-    public void printBenefitsDetails(BenefitsDetailsDto benefitsDetailsDto) {
+    private void printBenefitsDetails(BenefitsDetailsDto benefitsDetailsDto) {
         System.out.println("\n<혜택 내역>");
         printDayBenefits(benefitsDetailsDto.dayBenefits());
         printWeekdayOrWeekendDayBenefits(benefitsDetailsDto.weekdayBenefits(), benefitsDetailsDto.weekendDayBenefits());
@@ -56,7 +65,7 @@ public class OutputView {
         printPresentationBenefits(benefitsDetailsDto.presentationBenefits());
     }
 
-    public void printDayBenefits(int dayBenefits) {
+    private void printDayBenefits(int dayBenefits) {
         System.out.print("크리스마스 디데이 할인: ");
         printDiscountPrice(dayBenefits);
     }
@@ -69,32 +78,32 @@ public class OutputView {
         printWeekendDayBenefits(weekendDayBenefits);
     }
 
-    public void printWeekdayBenefits(int weekdayBenefits) {
+    private void printWeekdayBenefits(int weekdayBenefits) {
         System.out.print("평일 할인: ");
         printDiscountPrice(weekdayBenefits);
     }
 
-    public void printWeekendDayBenefits(int weekendDayBenefits) {
+    private void printWeekendDayBenefits(int weekendDayBenefits) {
         System.out.print("주말 할인: ");
         printDiscountPrice(weekendDayBenefits);
     }
 
-    public void printSpecialDayBenefits(int specialDayBenefits) {
+    private void printSpecialDayBenefits(int specialDayBenefits) {
         System.out.print("특별 할인: ");
         printDiscountPrice(specialDayBenefits);
     }
 
-    public void printPresentationBenefits(int benefit) {
+    private void printPresentationBenefits(int benefit) {
         System.out.print("증정 이벤트: ");
         printDiscountPrice(benefit);
     }
 
-    public void printAfterTotalPrice(int totalPrice) {
+    private void printAfterTotalPrice(int totalPrice) {
         System.out.println("\n<할인 후 예상 결제 금액>");
         System.out.println(getFormattedPrice(totalPrice));
     }
 
-    public void printTotalBenefits(int totalBenefits) {
+    private void printTotalBenefits(int totalBenefits) {
         System.out.println("\n<총혜택 금액>");
         printDiscountPrice(totalBenefits);
     }
