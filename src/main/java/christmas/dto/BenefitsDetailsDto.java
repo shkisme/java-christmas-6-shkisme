@@ -1,12 +1,13 @@
 package christmas.dto;
 
 import christmas.model.benefits.Benefits;
+import christmas.model.presents.Presents;
 
-public record BenefitsDetailsDto(boolean isApply, int dayBenefits,
+public record BenefitsDetailsDto(int dayBenefits,
                                  int weekdayBenefits, int weekendBenefits,
-                                 int specialDayBenefits, int presentationBenefits) {
-    public static BenefitsDetailsDto of(boolean isApply, Benefits benefits) {
-        return new BenefitsDetailsDto(isApply, benefits.getDayBenefits(), benefits.getWeekdayBenefits(),
-                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), benefits.getPresentBenefits());
+                                 int specialDayBenefits, int presentsBenefits) {
+    public static BenefitsDetailsDto of(Benefits benefits, Presents presents) {
+        return new BenefitsDetailsDto(benefits.getDayBenefits(), benefits.getWeekdayBenefits(),
+                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), presents.getBenefits());
     }
 }

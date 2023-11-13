@@ -8,10 +8,6 @@ public class Badge {
         this.name = name;
     }
 
-    public static Badge from(BadgeData badgeData) {
-        return new Badge(badgeData.toString());
-    }
-
     public String getName() {
         return name;
     }

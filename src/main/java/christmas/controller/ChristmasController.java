@@ -46,7 +46,7 @@ public class ChristmasController {
         Benefits benefits = new ChristmasBenefits(presents, orders, orderDate);
 
         printOrders(orders);
-        printBenefits(benefits);
+        printBenefits(benefits, presents);
     }
 
     private OrderDate readDate() {
@@ -90,8 +90,8 @@ public class ChristmasController {
         outputView.printOrders(orders);
     }
 
-    private void printBenefits(Benefits benefits) {
-        outputView.printBenefits(BenefitsDto.of(benefits.isApply(), benefits));
+    private void printBenefits(Benefits benefits, Presents presents) {
+        outputView.printBenefits(BenefitsDto.of(benefits.isApply(), benefits, presents));
         outputView.printBadge(findBadgeByBenefits(benefits));
     }
 

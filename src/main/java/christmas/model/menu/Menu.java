@@ -13,12 +13,6 @@ public class Menu {
         this.type = type;
     }
 
-    public static Menu from(MenuData menuData) {
-        return new Menu(menuData.getName(),
-                menuData.getPrice(),
-                menuData.getType());
-    }
-
     public boolean isType(String type) {
         return Objects.equals(this.type, type);
     }

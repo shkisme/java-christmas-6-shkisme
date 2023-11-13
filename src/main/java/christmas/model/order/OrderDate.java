@@ -40,7 +40,7 @@ public class OrderDate {
         return date.getDayOfMonth() == day;
     }
 
-    public boolean isDayBeforeOrEqual(int day) {
+    public boolean isBeforeOrEqual(int day) {
         return date.getDayOfMonth() <= day;
     }
 

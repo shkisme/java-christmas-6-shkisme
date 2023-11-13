@@ -12,6 +12,6 @@ public class MenuEnumRepository implements MenuRepository {
         return Arrays.stream(MenuData.values())
                 .filter(menuData -> menuData.isName(name))
                 .findFirst()
-                .map(Menu::from);
+                .map(menuData -> new Menu(menuData.getName(), menuData.getPrice(), menuData.getType()));
     }
 }

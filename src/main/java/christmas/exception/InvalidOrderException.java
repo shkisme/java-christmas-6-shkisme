@@ -12,6 +12,10 @@ public class InvalidOrderException extends InvalidException {
         InvalidOrderError(String message) {
             this.message = message;
         }
+
+        public String getMessage() {
+            return message;
+        }
     }
 
     public InvalidOrderException(InvalidOrderError error) {

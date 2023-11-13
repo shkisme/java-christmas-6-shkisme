@@ -1,16 +1,20 @@
 package christmas.dto;
 
 import christmas.model.benefits.Benefits;
+import christmas.model.presents.Presents;
 
-public record BenefitsDto(int beforeTotalPrice, PresentsDto presents,
-                          BenefitsDetailsDto benefitsDetailsDto,
-                          int totalBenefits, int afterTotalPrice) {
+public record BenefitsDto(
+        boolean isApply, int beforeTotalPrice, int totalBenefits, int afterTotalPrice,
+        BenefitsDetailsDto benefitsDetailsDto, PresentsDto presents
+) {
 
-    public static BenefitsDto of(boolean isApply, Benefits benefits) {
-        return new BenefitsDto(benefits.getBeforeTotalPrice(),
-                PresentsDto.of(benefits.isPresentsApply(), benefits.getPresents()),
-                BenefitsDetailsDto.of(isApply, benefits),
+    public static BenefitsDto of(boolean isApply, Benefits benefits, Presents presents) {
+        return new BenefitsDto(isApply,
+                benefits.getBeforeTotalPrice(),
                 benefits.getTotalBenefits(),
-                benefits.getAfterTotalPrice());
+                benefits.getAfterTotalPrice(),
+                BenefitsDetailsDto.of(benefits, presents),
+                PresentsDto.of(presents.isApply(), presents.getMenus())
+        );
     }
 }

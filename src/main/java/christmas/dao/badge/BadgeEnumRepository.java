@@ -14,6 +14,6 @@ public class BadgeEnumRepository implements BadgeRepository {
         return Arrays.stream(BadgeData.values())
                 .filter(badgeData -> badgeData.isMatch(price))
                 .max(comparingInt(BadgeData::getPrice))
-                .map(Badge::from);
+                .map(badgeData -> new Badge(badgeData.toString()));
     }
 }

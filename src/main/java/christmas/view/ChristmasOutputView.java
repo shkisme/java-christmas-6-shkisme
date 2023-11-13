@@ -45,7 +45,7 @@ public class ChristmasOutputView implements OutputView {
         printBeforeTotalPrice(benefits.beforeTotalPrice());
         printPresentations(benefits.presents());
 
-        printBenefitsDetails(benefits.benefitsDetailsDto());
+        printBenefitsDetails(benefits.isApply(), benefits.benefitsDetailsDto());
 
         printTotalBenefits(benefits.totalBenefits());
         printAfterTotalPrice(benefits.afterTotalPrice());
@@ -67,16 +67,16 @@ public class ChristmasOutputView implements OutputView {
                 .forEach((name, count) -> System.out.println(MENU_MESSAGE.formatted(name, count)));
     }
 
-    private void printBenefitsDetails(BenefitsDetailsDto benefitsDetails) {
+    private void printBenefitsDetails(boolean isApply, BenefitsDetailsDto benefitsDetails) {
         System.out.println("\n<혜택 내역>");
-        if (!benefitsDetails.isApply()) {
+        if (!isApply) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
         printDayBenefits(benefitsDetails.dayBenefits());
         printWeekdayOrWeekendBenefits(benefitsDetails.weekdayBenefits(), benefitsDetails.weekendBenefits());
         printSpecialDayBenefits(benefitsDetails.specialDayBenefits());
-        printPresentationBenefits(benefitsDetails.presentationBenefits());
+        printPresentationBenefits(benefitsDetails.presentsBenefits());
     }
 
     private void printDayBenefits(int dayBenefits) {

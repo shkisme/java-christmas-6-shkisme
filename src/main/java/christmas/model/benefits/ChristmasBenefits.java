@@ -1,10 +1,8 @@
 package christmas.model.benefits;
 
-import christmas.model.menu.Menu;
 import christmas.model.order.OrderDate;
 import christmas.model.order.Orders;
 import christmas.model.presents.Presents;
-import java.util.List;
 
 public class ChristmasBenefits implements Benefits {
     private static final int CHRISTMAS_DAY = 25;
@@ -28,7 +26,7 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getDayBenefits() {
-        if (orderDate.isDayBeforeOrEqual(CHRISTMAS_DAY)) {
+        if (orderDate.isBeforeOrEqual(CHRISTMAS_DAY)) {
             return 1000 + (orderDate.getDayOfMonth() - 1) * 100;
         }
         return 0;
@@ -69,30 +67,15 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getTotalBenefits() {
-        return getTotalBenefitsWithoutPresentation() + getPresentBenefits();
+        return getTotalBenefitsWithoutPresents() + presents.getBenefits();
     }
 
     @Override
     public int getAfterTotalPrice() {
-        return orders.getTotalPrice() - getTotalBenefitsWithoutPresentation();
+        return getBeforeTotalPrice() - getTotalBenefitsWithoutPresents();
     }
 
-    private int getTotalBenefitsWithoutPresentation() {
+    private int getTotalBenefitsWithoutPresents() {
         return getDayBenefits() + getWeekdayBenefits() + getWeekendBenefits() + getSpecialDayBenefits();
-    }
-
-    @Override
-    public List<Menu> getPresents() {
-        return presents.getMenus();
-    }
-
-    @Override
-    public int getPresentBenefits() {
-        return presents.getBenefits();
-    }
-
-    @Override
-    public boolean isPresentsApply() {
-        return presents.isApply();
     }
 }

@@ -16,11 +16,6 @@ public class ChristmasPresents implements Presents {
     }
 
     @Override
-    public List<Menu> getMenus() {
-        return unmodifiableList(presents);
-    }
-
-    @Override
     public int getBenefits() {
         return presents.stream()
                 .map(Menu::getPrice)
@@ -31,5 +26,10 @@ public class ChristmasPresents implements Presents {
     @Override
     public boolean isApply() {
         return orders.hasPresentations();
+    }
+
+    @Override
+    public List<Menu> getMenus() {
+        return unmodifiableList(presents);
     }
 }
