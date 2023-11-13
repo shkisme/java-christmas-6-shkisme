@@ -9,6 +9,7 @@ import christmas.dto.BenefitsDto;
 import christmas.dto.MenuDto;
 import christmas.dto.PresentsDto;
 import christmas.exception.InvalidMenuException;
+import christmas.model.price.Price;
 import christmas.model.badge.Badge;
 import christmas.model.benefits.Benefits;
 import christmas.model.benefits.ChristmasBenefits;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ChristmasController {
-    private static final String PRESENTATION_MENU_NAME = "샴페인";
+    private static final String PRESENTS_MENU_NAME = "샴페인";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -44,7 +45,7 @@ public class ChristmasController {
         OrderDate orderDate = readDate();
         Orders orders = readOrders();
 
-        Presents presents = createPresentation(orders);
+        Presents presents = createPresentation();
         Benefits benefits = new ChristmasBenefits(orders, orderDate);
 
         printOrders(orders);
@@ -77,9 +78,9 @@ public class ChristmasController {
         return new Orders(orders);
     }
 
-    private Presents createPresentation(Orders orders) {
-        Menu presentation = findMenuByName(PRESENTATION_MENU_NAME);
-        return new ChristmasPresents(List.of(presentation), orders);
+    private Presents createPresentation() {
+        Menu presentation = findMenuByName(PRESENTS_MENU_NAME);
+        return new ChristmasPresents(List.of(presentation));
     }
 
     private Menu findMenuByName(String name) {
@@ -93,12 +94,10 @@ public class ChristmasController {
     }
 
     private void printBenefits(Orders orders, Benefits benefits, Presents presents) {
-        int beforePrice = orders.getTotalPrice();
-        int totalBenefits = benefits.getTotalBenefits() + presents.getBenefits();
-        int afterPrice = beforePrice - benefits.getTotalBenefits();
+        Price price = new Price(orders.getPrice(), benefits.getTotalBenefits(), presents.getPrice());
         boolean hasBenefits = orders.hasBenefits();
 
-        outputView.printBenefits(BenefitsDto.of(hasBenefits, beforePrice, totalBenefits, afterPrice,
+        outputView.printBenefits(BenefitsDto.of(hasBenefits, price,
                 BenefitsDetailsDto.of(benefits, presents),
                 PresentsDto.of(orders.hasPresents(), presents.getMenus())));
         outputView.printBadge(findBadgeByBenefits(hasBenefits, benefits));

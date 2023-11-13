@@ -7,5 +7,5 @@ public interface Presents {
 
     List<Menu> getMenus();
 
-    int getBenefits();
+    int getPrice();
 }

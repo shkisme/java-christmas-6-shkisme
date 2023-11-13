@@ -8,6 +8,6 @@ public record BenefitsDetailsDto(int dayBenefits,
                                  int specialDayBenefits, int presentsBenefits) {
     public static BenefitsDetailsDto of(Benefits benefits, Presents presents) {
         return new BenefitsDetailsDto(benefits.getDayBenefits(), benefits.getWeekdayBenefits(),
-                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), presents.getBenefits());
+                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), presents.getPrice());
     }
 }

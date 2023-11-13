@@ -25,7 +25,7 @@ public class Orders {
         }
     }
 
-    public int getTotalPrice() {
+    public int getPrice() {
         return orders.stream()
                 .map(Order::getPrice)
                 .mapToInt(Integer::intValue)
@@ -33,11 +33,11 @@ public class Orders {
     }
 
     public boolean hasBenefits() {
-        return BENEFITS_PRICE <= getTotalPrice();
+        return BENEFITS_PRICE <= getPrice();
     }
 
     public boolean hasPresents() {
-        return PRESENTS_PRICE <= getTotalPrice();
+        return PRESENTS_PRICE <= getPrice();
     }
 
     public int countByMenuType(String menuType) {

@@ -42,13 +42,11 @@ public class ChristmasOutputView implements OutputView {
 
     @Override
     public void printBenefits(BenefitsDto benefits) {
-        printBeforeTotalPrice(benefits.beforeTotalPrice());
+        printBeforeTotalPrice(benefits.beforePrice());
         printPresentations(benefits.presents());
-
         printBenefitsDetails(benefits.isApply(), benefits.benefitsDetailsDto());
-
         printTotalBenefits(benefits.totalBenefits());
-        printAfterTotalPrice(benefits.afterTotalPrice());
+        printAfterTotalPrice(benefits.afterPrice());
     }
 
     private void printBeforeTotalPrice(int totalPrice) {
