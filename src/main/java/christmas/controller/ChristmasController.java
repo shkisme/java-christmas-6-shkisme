@@ -21,7 +21,7 @@ import christmas.view.OutputView;
 import java.util.List;
 import java.util.Optional;
 
-public class Controller {
+public class ChristmasController {
     private static final String PRESENTATION_MENU_NAME = "샴페인";
 
     private final InputView inputView;
@@ -29,8 +29,8 @@ public class Controller {
     private final MenuRepository menuRepository;
     private final BadgeRepository badgeRepository;
 
-    public Controller(InputView inputView, OutputView outputView, MenuRepository menuRepository,
-                      BadgeRepository badgeRepository) {
+    public ChristmasController(InputView inputView, OutputView outputView,
+                               MenuRepository menuRepository, BadgeRepository badgeRepository) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.menuRepository = menuRepository;
