@@ -12,7 +12,7 @@ public class ChristmasBenefits implements Benefits {
     private static final String WEEKEND_MENU_NAME = "메인";
 
     private final Presentation presentation;
-    private final Orders orders;
+z    private final Orders orders;
     private final OrderDate orderDate;
 
     public ChristmasBenefits(Presentation presentation, Orders orders, OrderDate orderDate) {
@@ -89,5 +89,10 @@ public class ChristmasBenefits implements Benefits {
     @Override
     public int getPresentationBenefits() {
         return presentation.getBenefits();
+    }
+
+    @Override
+    public boolean isPresentApply() {
+        return presentation.isApply();
     }
 }

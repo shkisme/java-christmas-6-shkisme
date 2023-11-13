@@ -17,24 +17,19 @@ public class ChristmasPresentation implements Presentation {
 
     @Override
     public List<Menu> getMenus() {
-        if (isApply()) {
-            return unmodifiableList(presentations);
-        }
-        return List.of();
+        return unmodifiableList(presentations);
     }
 
     @Override
     public int getBenefits() {
-        if (isApply()) {
-            return presentations.stream()
-                    .map(Menu::getPrice)
-                    .mapToInt(Integer::intValue)
-                    .sum();
-        }
-        return 0;
+        return presentations.stream()
+                .map(Menu::getPrice)
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
-    private boolean isApply() {
+    @Override
+    public boolean isApply() {
         return orders.hasPresentations();
     }
 }

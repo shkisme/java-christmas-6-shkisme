@@ -5,12 +5,12 @@ import static java.util.stream.Collectors.groupingBy;
 
 import christmas.dto.BenefitsDetailsDto;
 import christmas.dto.BenefitsDto;
+import christmas.dto.PresentationsDto;
 import christmas.model.badge.Badge;
 import christmas.model.menu.Menu;
 import christmas.model.order.Order;
 import christmas.model.order.Orders;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -56,13 +56,13 @@ public class ChristmasOutputView implements OutputView {
         System.out.println(getFormattedPrice(totalPrice));
     }
 
-    private void printPresentations(List<Menu> presentations) {
+    private void printPresentations(PresentationsDto presentations) {
         System.out.println("\n<증정 메뉴>");
-        if (presentations.isEmpty()) {
+        if (presentations.isApply()) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
-        presentations.stream()
+        presentations.menus().stream()
                 .collect(groupingBy(Menu::getName, counting()))
                 .forEach((name, count) -> System.out.println(MENU_MESSAGE.formatted(name, count)));
     }

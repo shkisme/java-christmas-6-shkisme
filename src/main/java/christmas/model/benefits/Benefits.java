@@ -24,4 +24,6 @@ public interface Benefits {
     List<Menu> getPresentations();
 
     int getPresentationBenefits();
+
+    boolean isPresentApply();
 }

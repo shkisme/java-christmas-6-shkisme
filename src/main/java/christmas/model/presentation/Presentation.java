@@ -8,4 +8,6 @@ public interface Presentation {
     List<Menu> getMenus();
 
     int getBenefits();
+
+    boolean isApply();
 }
