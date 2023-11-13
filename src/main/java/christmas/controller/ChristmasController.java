@@ -4,8 +4,10 @@ import static christmas.exception.InvalidMenuException.InvalidMenuError.NOT_EXIS
 
 import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuRepository;
+import christmas.dto.BenefitsDetailsDto;
 import christmas.dto.BenefitsDto;
 import christmas.dto.MenuDto;
+import christmas.dto.PresentsDto;
 import christmas.exception.InvalidMenuException;
 import christmas.model.badge.Badge;
 import christmas.model.benefits.Benefits;
@@ -43,10 +45,10 @@ public class ChristmasController {
         Orders orders = readOrders();
 
         Presents presents = createPresentation(orders);
-        Benefits benefits = new ChristmasBenefits(presents, orders, orderDate);
+        Benefits benefits = new ChristmasBenefits(orders, orderDate);
 
         printOrders(orders);
-        printBenefits(benefits, presents);
+        printBenefits(orders, benefits, presents);
     }
 
     private OrderDate readDate() {
@@ -90,13 +92,20 @@ public class ChristmasController {
         outputView.printOrders(orders);
     }
 
-    private void printBenefits(Benefits benefits, Presents presents) {
-        outputView.printBenefits(BenefitsDto.of(benefits.isApply(), benefits, presents));
-        outputView.printBadge(findBadgeByBenefits(benefits));
+    private void printBenefits(Orders orders, Benefits benefits, Presents presents) {
+        int beforePrice = orders.getTotalPrice();
+        int totalBenefits = benefits.getTotalBenefits() + presents.getBenefits();
+        int afterPrice = beforePrice - benefits.getTotalBenefits();
+        boolean hasBenefits = orders.hasBenefits();
+
+        outputView.printBenefits(BenefitsDto.of(hasBenefits, beforePrice, totalBenefits, afterPrice,
+                BenefitsDetailsDto.of(benefits, presents),
+                PresentsDto.of(orders.hasPresents(), presents.getMenus())));
+        outputView.printBadge(findBadgeByBenefits(hasBenefits, benefits));
     }
 
-    private Optional<Badge> findBadgeByBenefits(Benefits benefits) {
-        if (benefits.isApply()) {
+    private Optional<Badge> findBadgeByBenefits(boolean hasBenefits, Benefits benefits) {
+        if (hasBenefits) {
             return badgeRepository.findByPrice(benefits.getTotalBenefits());
         }
         return Optional.empty();
