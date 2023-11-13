@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Controller {
+    private static final String PRESENTATION_MENU_NAME = "샴페인";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -40,8 +41,10 @@ public class Controller {
         outputView.printStartMessage();
         OrderDate orderDate = readDate();
         Orders orders = readOrders();
+
         Presentation presentation = createPresentation(orders);
         Benefits benefits = new ChristmasBenefits(presentation, orders, orderDate);
+
         printOrders(orders);
         printBenefits(benefits);
     }
@@ -73,7 +76,7 @@ public class Controller {
     }
 
     private Presentation createPresentation(Orders orders) {
-        Menu presentation = findMenuByName("샴페인");
+        Menu presentation = findMenuByName(PRESENTATION_MENU_NAME);
         return new ChristmasPresentation(List.of(presentation), orders);
     }
 
