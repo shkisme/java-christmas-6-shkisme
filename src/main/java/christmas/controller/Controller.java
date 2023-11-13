@@ -2,8 +2,9 @@ package christmas.controller;
 
 import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuRepository;
-import christmas.dto.BenefitsDetailsDto;
+import christmas.dto.BenefitsDto;
 import christmas.dto.MenuDto;
+import christmas.model.badge.Badge;
 import christmas.model.benefits.Benefits;
 import christmas.model.benefits.ChristmasBenefits;
 import christmas.model.menu.Menu;
@@ -15,6 +16,7 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class Controller {
 
@@ -34,10 +36,10 @@ public class Controller {
     public void run() {
         outputView.printStartMessage();
         Orders orders = readOrders();
-        Benefits benefits = new ChristmasBenefits(orders);
-        Menu presentationMenu = findMenuByName("샴페인");
-        Presentation presentation = new ChristmasPresentation(presentationMenu, orders);
-        printResult(orders, benefits, presentation);
+        Presentation presentation = createPresentation(orders);
+        Benefits benefits = new ChristmasBenefits(presentation, orders);
+        printOrders(orders);
+        printBenefits(benefits);
     }
 
     private Orders readOrders() {
@@ -67,26 +69,30 @@ public class Controller {
         return new Orders(orders, orderDate);
     }
 
+    private Presentation createPresentation(Orders orders) {
+        Menu presentation = findMenuByName("샴페인");
+        return new ChristmasPresentation(List.of(presentation), orders);
+    }
+
     private Menu findMenuByName(String name) {
         return menuRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("메뉴판에 없는 유효하지 않은 주문입니다. 다시 입력해 주세요."));
     }
 
-    private void printResult(Orders orders, Benefits benefits, Presentation presentation) {
+    private void printOrders(Orders orders) {
         outputView.printResultMessage();
         outputView.printOrders(orders);
-        if (orders.isNoBenefits()) {
-            outputView.printNoEventResult(orders);
-            return;
+    }
+
+    private void printBenefits(Benefits benefits) {
+        outputView.printBenefits(BenefitsDto.from(benefits));
+        outputView.printBadge(findBadgeByBenefits(benefits));
+    }
+
+    private Optional<Badge> findBadgeByBenefits(Benefits benefits) {
+        if (benefits.isApplicable()) {
+            return badgeRepository.findByPrice(benefits.getTotalBenefits());
         }
-        int beforePrice = orders.getTotalPrice();
-        outputView.printBeforeTotalPrice(beforePrice);
-        outputView.printPresentationMenu(presentation.getPresentationName());
-
-        outputView.printBenefitsDetails(BenefitsDetailsDto.of(benefits, presentation));
-
-        outputView.printTotalBenefits(benefits.getTotalBenefits() + presentation.getBenefits());
-        outputView.printAfterTotalPrice(beforePrice - benefits.getTotalBenefits());
-        outputView.printBadge(badgeRepository.findByPrice(benefits.getTotalBenefits() + presentation.getBenefits()));
+        return Optional.empty();
     }
 }

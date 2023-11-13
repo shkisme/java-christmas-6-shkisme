@@ -1,10 +1,11 @@
 package christmas.model.presentation;
 
-import java.util.Optional;
+import christmas.model.menu.Menu;
+import java.util.List;
 
 public interface Presentation {
 
-    Optional<String> getPresentationName();
+    List<Menu> getPresentations();
 
     int getBenefits();
 }

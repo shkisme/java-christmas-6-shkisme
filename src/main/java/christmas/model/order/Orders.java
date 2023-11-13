@@ -38,8 +38,8 @@ public class Orders {
                 .sum();
     }
 
-    public boolean isNoBenefits() {
-        return getTotalPrice() < 10_000;
+    public boolean hasBenefits() {
+        return 10_000 <= getTotalPrice();
     }
 
     public boolean isWeekday() {
