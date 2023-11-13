@@ -7,8 +7,6 @@ import christmas.model.order.Orders;
 import java.util.List;
 
 public class ChristmasPresentation implements Presentation {
-    private static final int PRESENTATION_PRICE = 120_000;
-
     private final List<Menu> presentations;
     private final Orders orders;
 
@@ -18,8 +16,8 @@ public class ChristmasPresentation implements Presentation {
     }
 
     @Override
-    public List<Menu> getPresentations() {
-        if (isPresentations()) {
+    public List<Menu> getMenus() {
+        if (isApply()) {
             return unmodifiableList(presentations);
         }
         return List.of();
@@ -27,7 +25,7 @@ public class ChristmasPresentation implements Presentation {
 
     @Override
     public int getBenefits() {
-        if (isPresentations()) {
+        if (isApply()) {
             return presentations.stream()
                     .map(Menu::getPrice)
                     .mapToInt(Integer::intValue)
@@ -36,7 +34,7 @@ public class ChristmasPresentation implements Presentation {
         return 0;
     }
 
-    private boolean isPresentations() {
-        return PRESENTATION_PRICE <= orders.getTotalPrice();
+    private boolean isApply() {
+        return orders.hasPresentations();
     }
 }

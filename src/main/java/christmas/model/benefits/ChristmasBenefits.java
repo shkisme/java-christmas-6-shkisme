@@ -28,8 +28,32 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getDayBenefits() {
-        if (isApply() && orderDate.isDayBeforeOrEqual(CHRISTMAS_DAY)) {
+        if (orderDate.isDayBeforeOrEqual(CHRISTMAS_DAY)) {
             return 1000 + (orderDate.getDayOfMonth() - 1) * 100;
+        }
+        return 0;
+    }
+
+    @Override
+    public int getWeekdayBenefits() {
+        if (isWeekday()) {
+            return orders.countByMenuType(WEEKDAY_MENU_NAME) * 2023;
+        }
+        return 0;
+    }
+
+    @Override
+    public int getWeekendBenefits() {
+        if (!isWeekday()) {
+            return orders.countByMenuType(WEEKEND_MENU_NAME) * 2023;
+        }
+        return 0;
+    }
+
+    @Override
+    public int getSpecialDayBenefits() {
+        if (orderDate.isSpecialDay()) {
+            return 1000;
         }
         return 0;
     }
@@ -39,32 +63,8 @@ public class ChristmasBenefits implements Benefits {
         return orders.hasBenefits();
     }
 
-    @Override
-    public int getWeekdayBenefits() {
-        if (isApply() && isWeekday()) {
-            return orders.countByMenuType(WEEKDAY_MENU_NAME) * 2023;
-        }
-        return 0;
-    }
-
-    @Override
-    public int getWeekendBenefits() {
-        if (isApply() && !isWeekday()) {
-            return orders.countByMenuType(WEEKEND_MENU_NAME) * 2023;
-        }
-        return 0;
-    }
-
     private boolean isWeekday() {
         return orderDate.isWeekday();
-    }
-
-    @Override
-    public int getSpecialDayBenefits() {
-        if (isApply() && orderDate.isSpecialDay()) {
-            return 1000;
-        }
-        return 0;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public List<Menu> getPresentations() {
-        return presentation.getPresentations();
+        return presentation.getMenus();
     }
 
     @Override

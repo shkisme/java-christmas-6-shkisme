@@ -9,6 +9,7 @@ import java.util.List;
 public class Orders {
     private static final String RESTRICTION_MENU_NAME = "음료";
     private static final int BENEFITS_PRICE = 10_000;
+    private static final int PRESENTATION_PRICE = 120_000;
 
     private final List<Order> orders;
 
@@ -33,6 +34,10 @@ public class Orders {
 
     public boolean hasBenefits() {
         return BENEFITS_PRICE <= getTotalPrice();
+    }
+
+    public boolean hasPresentations() {
+        return PRESENTATION_PRICE <= getTotalPrice();
     }
 
     public int countByMenuType(String menuType) {

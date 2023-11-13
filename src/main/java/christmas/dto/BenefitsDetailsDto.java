@@ -2,12 +2,11 @@ package christmas.dto;
 
 import christmas.model.benefits.Benefits;
 
-public record BenefitsDetailsDto(int dayBenefits,
+public record BenefitsDetailsDto(boolean isApply, int dayBenefits,
                                  int weekdayBenefits, int weekendBenefits,
-                                 int specialDayBenefits, int presentationBenefits, boolean isBenefits) {
-    public static BenefitsDetailsDto of(Benefits benefits, boolean isBenefits) {
-        return new BenefitsDetailsDto(benefits.getDayBenefits(), benefits.getWeekdayBenefits(),
-                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), benefits.getPresentationBenefits(),
-                isBenefits);
+                                 int specialDayBenefits, int presentationBenefits) {
+    public static BenefitsDetailsDto of(boolean isApply, Benefits benefits) {
+        return new BenefitsDetailsDto(isApply, benefits.getDayBenefits(), benefits.getWeekdayBenefits(),
+                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), benefits.getPresentationBenefits());
     }
 }

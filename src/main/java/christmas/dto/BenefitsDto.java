@@ -8,10 +8,10 @@ public record BenefitsDto(int beforeTotalPrice, List<Menu> presentations,
                           BenefitsDetailsDto benefitsDetailsDto,
                           int totalBenefits, int afterTotalPrice) {
 
-    public static BenefitsDto of(Benefits benefits, boolean isBenefits) {
+    public static BenefitsDto of(boolean isApply, Benefits benefits) {
         return new BenefitsDto(benefits.getBeforeTotalPrice(),
                 benefits.getPresentations(),
-                BenefitsDetailsDto.of(benefits, isBenefits),
+                BenefitsDetailsDto.of(isApply, benefits),
                 benefits.getTotalBenefits(),
                 benefits.getAfterTotalPrice());
     }

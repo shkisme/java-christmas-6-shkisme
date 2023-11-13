@@ -39,7 +39,7 @@ public class OutputView {
 
     public void printBenefits(BenefitsDto benefits) {
         printBeforeTotalPrice(benefits.beforeTotalPrice());
-        printPresentationMenu(benefits.presentations());
+        printPresentations(benefits.presentations());
 
         printBenefitsDetails(benefits.benefitsDetailsDto());
 
@@ -52,7 +52,7 @@ public class OutputView {
         System.out.println(getFormattedPrice(totalPrice));
     }
 
-    private void printPresentationMenu(List<Menu> presentations) {
+    private void printPresentations(List<Menu> presentations) {
         System.out.println("\n<증정 메뉴>");
         if (presentations.isEmpty()) {
             System.out.println(NOT_EXIST_MESSAGE);
@@ -65,7 +65,7 @@ public class OutputView {
 
     private void printBenefitsDetails(BenefitsDetailsDto benefitsDetails) {
         System.out.println("\n<혜택 내역>");
-        if (!benefitsDetails.isBenefits()) {
+        if (!benefitsDetails.isApply()) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
