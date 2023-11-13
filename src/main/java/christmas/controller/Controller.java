@@ -33,21 +33,15 @@ public class Controller {
 
     public void run() {
         outputView.printStartMessage();
-        LocalDate orderDate = getOrderDate();
-        Orders orders = getOrders(orderDate);
+        Orders orders = readOrders();
         Benefits benefits = new ChristmasBenefits(orders);
-        Menu presentationMenu = menuRepository.findByName("샴페인")
-                .orElseThrow(IllegalAccessError::new);
+        Menu presentationMenu = findMenuByName("샴페인");
         Presentation presentation = new ChristmasPresentation(presentationMenu, orders);
         printResult(orders, benefits, presentation);
     }
 
-    private LocalDate getOrderDate() {
-        int date = inputView.readDate();
-        return LocalDate.of(2023, 12, date);
-    }
-
-    private Orders getOrders(LocalDate orderDate) {
+    private Orders readOrders() {
+        LocalDate orderDate = readOrderDate();
         while (true) {
             List<MenuDto> menuDtos = inputView.readMenu();
             try {
@@ -56,6 +50,11 @@ public class Controller {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    private LocalDate readOrderDate() {
+        int date = inputView.readDate();
+        return LocalDate.of(2023, 12, date);
     }
 
     private Orders generateOrders(List<MenuDto> menuDtos, LocalDate orderDate) {
