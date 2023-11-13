@@ -1,7 +1,17 @@
 package christmas.view;
 
+import static christmas.exception.InvalidDateException.InvalidDateError.INVALID_NUMBER;
+import static christmas.exception.InvalidDateException.InvalidDateError.INVALID_RANGE;
+import static christmas.exception.InvalidMenuException.InvalidMenuError.INVALID_FORMAT;
+import static christmas.exception.InvalidMenuException.InvalidMenuError.ZERO_COUNT;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.DUPLICATE;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_COUNT;
+
 import camp.nextstep.edu.missionutils.Console;
 import christmas.dto.MenuDto;
+import christmas.exception.InvalidDateException;
+import christmas.exception.InvalidMenuException;
+import christmas.exception.InvalidOrderException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -37,14 +47,14 @@ public class InputView {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("문자가 입력되어 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            throw new InvalidDateException(INVALID_NUMBER);
         }
     }
 
     private void validateRange(String input) {
         int date = Integer.parseInt(input);
         if (date < 1 || 31 < date) {
-            throw new IllegalArgumentException("날짜의 범위가 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            throw new InvalidDateException(INVALID_RANGE);
         }
     }
 
@@ -72,7 +82,7 @@ public class InputView {
                 .forEach(menu -> {
                     Matcher matcher = MENU.matcher(menu);
                     if (!matcher.matches()) {
-                        throw new IllegalArgumentException("메뉴의 형식이 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                        throw new InvalidMenuException(INVALID_FORMAT);
                     }
                 });
     }
@@ -80,7 +90,7 @@ public class InputView {
     private void validateCount(String input) {
         int menuCountSum = getMenuCountSum(input);
         if (20 < menuCountSum) {
-            throw new IllegalArgumentException("메뉴의 개수 합이 20을 넘는 주문은 유효하지 않습니다. 다시 입력해 주세요.");
+            throw new InvalidOrderException(INVALID_COUNT);
         }
     }
 
@@ -95,7 +105,7 @@ public class InputView {
     private int validateNonZero(String input) {
         int value = Integer.parseInt(input);
         if (value == 0) {
-            throw new IllegalArgumentException("메뉴의 개수가 0인 주문은 유효하지 않습니다. 다시 입력해 주세요.");
+            throw new InvalidMenuException(ZERO_COUNT);
         }
         return value;
     }
@@ -104,7 +114,7 @@ public class InputView {
         List<String> menuNames = getMenuNames(input);
         Set<String> nonDuplicateMenuNames = new HashSet<>(menuNames);
         if (menuNames.size() != nonDuplicateMenuNames.size()) {
-            throw new IllegalArgumentException("메뉴가 중복되어 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new InvalidOrderException(DUPLICATE);
         }
     }
 

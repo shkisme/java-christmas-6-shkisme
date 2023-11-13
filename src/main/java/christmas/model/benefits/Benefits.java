@@ -9,7 +9,7 @@ public interface Benefits {
 
     int getDayBenefits();
 
-    boolean isApplicable();
+    boolean isApply();
 
     int getWeekdayBenefits();
 

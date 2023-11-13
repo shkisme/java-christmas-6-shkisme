@@ -1,9 +1,12 @@
 package christmas.controller;
 
+import static christmas.exception.InvalidMenuException.InvalidMenuError.NOT_EXIST;
+
 import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuRepository;
 import christmas.dto.BenefitsDto;
 import christmas.dto.MenuDto;
+import christmas.exception.InvalidMenuException;
 import christmas.model.badge.Badge;
 import christmas.model.benefits.Benefits;
 import christmas.model.benefits.ChristmasBenefits;
@@ -76,7 +79,7 @@ public class Controller {
 
     private Menu findMenuByName(String name) {
         return menuRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("메뉴판에 없는 유효하지 않은 주문입니다. 다시 입력해 주세요."));
+                .orElseThrow(() -> new InvalidMenuException(NOT_EXIST));
     }
 
     private void printOrders(Orders orders) {
@@ -90,7 +93,7 @@ public class Controller {
     }
 
     private Optional<Badge> findBadgeByBenefits(Benefits benefits) {
-        if (benefits.isApplicable()) {
+        if (benefits.isApply()) {
             return badgeRepository.findByPrice(benefits.getTotalBenefits());
         }
         return Optional.empty();

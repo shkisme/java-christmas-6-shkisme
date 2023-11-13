@@ -21,20 +21,20 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getDayBenefits() {
-        if (isApplicable() && orders.isDayBeforeOfEqual(25)) {
+        if (isApply() && orders.isDayBeforeOfEqual(25)) {
             return 1000 + (orders.getDayOfMonth() - 1) * 100;
         }
         return 0;
     }
 
     @Override
-    public boolean isApplicable() {
+    public boolean isApply() {
         return orders.hasBenefits();
     }
 
     @Override
     public int getWeekdayBenefits() {
-        if (isApplicable() && isWeekday()) {
+        if (isApply() && isWeekday()) {
             return orders.countByMenuType("디저트") * 2023;
         }
         return 0;
@@ -42,7 +42,7 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getWeekendDayBenefits() {
-        if (isApplicable() && !isWeekday()) {
+        if (isApply() && !isWeekday()) {
             return orders.countByMenuType("메인") * 2023;
         }
         return 0;
@@ -54,7 +54,7 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getSpecialDayBenefits() {
-        if (isApplicable() && orders.isSpecialDay()) {
+        if (isApply() && orders.isSpecialDay()) {
             return 1000;
         }
         return 0;

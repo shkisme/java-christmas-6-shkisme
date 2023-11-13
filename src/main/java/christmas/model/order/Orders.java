@@ -1,11 +1,13 @@
 package christmas.model.order;
 
+import static christmas.exception.InvalidOrderException.InvalidOrderError.ORDER_RESTRICTIONS;
 import static java.time.DayOfWeek.MONDAY;
 import static java.time.DayOfWeek.SUNDAY;
 import static java.time.DayOfWeek.THURSDAY;
 import static java.time.DayOfWeek.TUESDAY;
 import static java.time.DayOfWeek.WEDNESDAY;
 
+import christmas.exception.InvalidOrderException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -27,7 +29,7 @@ public class Orders {
         boolean isAllDrink = orders.stream()
                 .allMatch(order -> order.isType("음료"));
         if (isAllDrink) {
-            throw new IllegalArgumentException("음료만 주문하여 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new InvalidOrderException(ORDER_RESTRICTIONS);
         }
     }
 
