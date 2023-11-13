@@ -15,6 +15,9 @@ import java.util.List;
 
 public class Orders {
     private static final List<DayOfWeek> weekday = List.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, SUNDAY);
+    private static final String RESTRICTION_MENU_NAME = "음료";
+    private static final int BENEFITS_PRICE = 10_000;
+    private static final int SPECIAL_DAY = 25;
 
     private final List<Order> orders;
     private final LocalDate orderDate;
@@ -26,8 +29,7 @@ public class Orders {
     }
 
     private void validateOrder(List<Order> orders) {
-        boolean isAllDrink = orders.stream()
-                .allMatch(order -> order.isType("음료"));
+        boolean isAllDrink = orders.stream().allMatch(order -> order.isType(RESTRICTION_MENU_NAME));
         if (isAllDrink) {
             throw new InvalidOrderException(ORDER_RESTRICTIONS);
         }
@@ -41,7 +43,7 @@ public class Orders {
     }
 
     public boolean hasBenefits() {
-        return 10_000 <= getTotalPrice();
+        return BENEFITS_PRICE <= getTotalPrice();
     }
 
     public boolean isWeekday() {
@@ -57,7 +59,7 @@ public class Orders {
     }
 
     public boolean isSpecialDay() {
-        return isDayEqual(SUNDAY) || isDayEqual(25);
+        return isDayEqual(SUNDAY) || isDayEqual(SPECIAL_DAY);
     }
 
     private boolean isDayEqual(DayOfWeek dayOfWeek) {
@@ -68,7 +70,7 @@ public class Orders {
         return orderDate.getDayOfMonth() == day;
     }
 
-    public boolean isDayBeforeOfEqual(int day) {
+    public boolean isDayBeforeOrEqual(int day) {
         return orderDate.getDayOfMonth() <= day;
     }
 

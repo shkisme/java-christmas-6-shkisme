@@ -7,6 +7,8 @@ import christmas.model.order.Orders;
 import java.util.List;
 
 public class ChristmasPresentation implements Presentation {
+    private static final int PRESENTATION_PRICE = 120_000;
+
     private final List<Menu> presentations;
     private final Orders orders;
 
@@ -35,6 +37,6 @@ public class ChristmasPresentation implements Presentation {
     }
 
     private boolean isPresentations() {
-        return 120_000 <= orders.getTotalPrice();
+        return PRESENTATION_PRICE <= orders.getTotalPrice();
     }
 }

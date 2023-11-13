@@ -15,6 +15,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 public class OutputView {
+    private static final String MENU_MESSAGE = "%s %d개";
+    private static final String NOT_EXIST_MESSAGE = "없음";
 
     public void printStartMessage() {
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
@@ -31,7 +33,7 @@ public class OutputView {
     public void printOrders(Orders orders) {
         System.out.println("\n<주문 메뉴>");
         for (Order order : orders.getOrders()) {
-            System.out.println(order.getMenuName() + " " + order.getCount() + "개");
+            System.out.println(MENU_MESSAGE.formatted(order.getMenuName(), order.getCount()));
         }
     }
 
@@ -53,22 +55,22 @@ public class OutputView {
     private void printPresentationMenu(List<Menu> presentations) {
         System.out.println("\n<증정 메뉴>");
         if (presentations.isEmpty()) {
-            System.out.println("없음");
+            System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
         presentations.stream()
                 .collect(groupingBy(Menu::getName, counting()))
-                .forEach((name, count) -> System.out.println(name + " " + count + "개"));
+                .forEach((name, count) -> System.out.println(MENU_MESSAGE.formatted(name, count)));
     }
 
     private void printBenefitsDetails(BenefitsDetailsDto benefitsDetails) {
         System.out.println("\n<혜택 내역>");
         if (!benefitsDetails.isBenefits()) {
-            System.out.println("없음");
+            System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
         printDayBenefits(benefitsDetails.dayBenefits());
-        printWeekdayOrWeekendDayBenefits(benefitsDetails.weekdayBenefits(), benefitsDetails.weekendDayBenefits());
+        printWeekdayOrWeekendBenefits(benefitsDetails.weekdayBenefits(), benefitsDetails.weekendBenefits());
         printSpecialDayBenefits(benefitsDetails.specialDayBenefits());
         printPresentationBenefits(benefitsDetails.presentationBenefits());
     }
@@ -78,7 +80,7 @@ public class OutputView {
         printDiscountPrice(dayBenefits);
     }
 
-    private void printWeekdayOrWeekendDayBenefits(int weekdayBenefits, int weekendDayBenefits) {
+    private void printWeekdayOrWeekendBenefits(int weekdayBenefits, int weekendDayBenefits) {
         if (weekendDayBenefits == 0) {
             printWeekdayBenefits(weekdayBenefits);
             return;
@@ -118,7 +120,7 @@ public class OutputView {
 
     private void printDiscountPrice(int price) {
         if (price == 0) {
-            System.out.println("없음");
+            System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
         System.out.println("-" + getFormattedPrice(price));
@@ -132,7 +134,7 @@ public class OutputView {
     public void printBadge(Optional<Badge> badge) {
         System.out.println("\n<12월 이벤트 배지>");
         if (badge.isEmpty()) {
-            System.out.println("없음");
+            System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
         System.out.println(badge.get().getName());

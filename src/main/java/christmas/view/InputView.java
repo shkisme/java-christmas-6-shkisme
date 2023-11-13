@@ -25,6 +25,12 @@ public class InputView {
     private static final String MENU_DELIMITER = ",";
     private static final String COUNT_DELIMITER = "-";
 
+    private static final int MIN_DATE = 1;
+    private static final int MAX_DATE = 31;
+    private static final int MAX_MENU_COUNT = 20;
+    private static final int MENU_NAME_POSITION = 0;
+    private static final int MENU_COUNT_POSITION = 1;
+
     public int readDate() {
         while (true) {
             System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
@@ -53,7 +59,7 @@ public class InputView {
 
     private void validateRange(String input) {
         int date = Integer.parseInt(input);
-        if (date < 1 || 31 < date) {
+        if (date < MIN_DATE || MAX_DATE < date) {
             throw new InvalidDateException(INVALID_RANGE);
         }
     }
@@ -89,7 +95,7 @@ public class InputView {
 
     private void validateCount(String input) {
         int menuCountSum = getMenuCountSum(input);
-        if (20 < menuCountSum) {
+        if (MAX_MENU_COUNT < menuCountSum) {
             throw new InvalidOrderException(INVALID_COUNT);
         }
     }
@@ -97,7 +103,7 @@ public class InputView {
     private int getMenuCountSum(String input) {
         return Arrays.stream(input.split(MENU_DELIMITER))
                 .map(menu -> menu.split(COUNT_DELIMITER))
-                .map(menu -> validateNonZero(menu[1]))
+                .map(menu -> validateNonZero(menu[MENU_COUNT_POSITION]))
                 .mapToInt(Integer::intValue)
                 .sum();
     }
@@ -120,14 +126,14 @@ public class InputView {
 
     private List<String> getMenuNames(String input) {
         return Arrays.stream(input.split(MENU_DELIMITER))
-                .map(menu -> menu.split(COUNT_DELIMITER)[0])
+                .map(menu -> menu.split(COUNT_DELIMITER)[MENU_NAME_POSITION])
                 .toList();
     }
 
     private List<MenuDto> getMenuDtos(String input) {
         return Arrays.stream(input.split(MENU_DELIMITER))
                 .map(menu -> menu.split(COUNT_DELIMITER))
-                .map(menu -> MenuDto.of(menu[0], Integer.parseInt(menu[1])))
+                .map(menu -> MenuDto.of(menu[MENU_NAME_POSITION], Integer.parseInt(menu[MENU_COUNT_POSITION])))
                 .toList();
     }
 }

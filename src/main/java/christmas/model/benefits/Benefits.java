@@ -13,7 +13,7 @@ public interface Benefits {
 
     int getWeekdayBenefits();
 
-    int getWeekendDayBenefits();
+    int getWeekendBenefits();
 
     int getSpecialDayBenefits();
 
