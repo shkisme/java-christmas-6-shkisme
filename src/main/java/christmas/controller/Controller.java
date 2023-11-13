@@ -12,12 +12,12 @@ import christmas.model.benefits.Benefits;
 import christmas.model.benefits.ChristmasBenefits;
 import christmas.model.menu.Menu;
 import christmas.model.order.Order;
+import christmas.model.order.OrderDate;
 import christmas.model.order.Orders;
 import christmas.model.presentation.ChristmasPresentation;
 import christmas.model.presentation.Presentation;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,38 +38,38 @@ public class Controller {
 
     public void run() {
         outputView.printStartMessage();
+        OrderDate orderDate = readDate();
         Orders orders = readOrders();
         Presentation presentation = createPresentation(orders);
-        Benefits benefits = new ChristmasBenefits(presentation, orders);
+        Benefits benefits = new ChristmasBenefits(presentation, orders, orderDate);
         printOrders(orders);
         printBenefits(benefits);
     }
 
+    private OrderDate readDate() {
+        int date = inputView.readDate();
+        return OrderDate.of(2023, 12, date);
+    }
+
     private Orders readOrders() {
-        LocalDate orderDate = readOrderDate();
         while (true) {
             List<MenuDto> menuDtos = inputView.readMenu();
             try {
-                return generateOrders(menuDtos, orderDate);
+                return generateOrders(menuDtos);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    private LocalDate readOrderDate() {
-        int date = inputView.readDate();
-        return LocalDate.of(2023, 12, date);
-    }
-
-    private Orders generateOrders(List<MenuDto> menuDtos, LocalDate orderDate) {
+    private Orders generateOrders(List<MenuDto> menuDtos) {
         List<Order> orders = menuDtos.stream()
                 .map(menuDto -> {
                     Menu menu = findMenuByName(menuDto.name());
                     return new Order(menu, menuDto.count());
                 })
                 .toList();
-        return new Orders(orders, orderDate);
+        return new Orders(orders);
     }
 
     private Presentation createPresentation(Orders orders) {

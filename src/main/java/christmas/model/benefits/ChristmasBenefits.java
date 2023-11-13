@@ -1,6 +1,7 @@
 package christmas.model.benefits;
 
 import christmas.model.menu.Menu;
+import christmas.model.order.OrderDate;
 import christmas.model.order.Orders;
 import christmas.model.presentation.Presentation;
 import java.util.List;
@@ -12,10 +13,12 @@ public class ChristmasBenefits implements Benefits {
 
     private final Presentation presentation;
     private final Orders orders;
+    private final OrderDate orderDate;
 
-    public ChristmasBenefits(Presentation presentation, Orders orders) {
+    public ChristmasBenefits(Presentation presentation, Orders orders, OrderDate orderDate) {
         this.presentation = presentation;
         this.orders = orders;
+        this.orderDate = orderDate;
     }
 
     @Override
@@ -25,8 +28,8 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getDayBenefits() {
-        if (isApply() && orders.isDayBeforeOrEqual(CHRISTMAS_DAY)) {
-            return 1000 + (orders.getDayOfMonth() - 1) * 100;
+        if (isApply() && orderDate.isDayBeforeOrEqual(CHRISTMAS_DAY)) {
+            return 1000 + (orderDate.getDayOfMonth() - 1) * 100;
         }
         return 0;
     }
@@ -53,12 +56,12 @@ public class ChristmasBenefits implements Benefits {
     }
 
     private boolean isWeekday() {
-        return orders.isWeekday();
+        return orderDate.isWeekday();
     }
 
     @Override
     public int getSpecialDayBenefits() {
-        if (isApply() && orders.isSpecialDay()) {
+        if (isApply() && orderDate.isSpecialDay()) {
             return 1000;
         }
         return 0;

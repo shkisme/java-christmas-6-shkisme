@@ -1,34 +1,23 @@
 package christmas.model.order;
 
 import static christmas.exception.InvalidOrderException.InvalidOrderError.ORDER_RESTRICTIONS;
-import static java.time.DayOfWeek.MONDAY;
-import static java.time.DayOfWeek.SUNDAY;
-import static java.time.DayOfWeek.THURSDAY;
-import static java.time.DayOfWeek.TUESDAY;
-import static java.time.DayOfWeek.WEDNESDAY;
+import static java.util.Collections.unmodifiableList;
 
 import christmas.exception.InvalidOrderException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 public class Orders {
-    private static final List<DayOfWeek> weekday = List.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, SUNDAY);
     private static final String RESTRICTION_MENU_NAME = "음료";
     private static final int BENEFITS_PRICE = 10_000;
-    private static final int SPECIAL_DAY = 25;
 
     private final List<Order> orders;
-    private final LocalDate orderDate;
 
-    public Orders(List<Order> orders, LocalDate orderDate) {
-        validateOrder(orders);
+    public Orders(List<Order> orders) {
+        validateOrders(orders);
         this.orders = orders;
-        this.orderDate = orderDate;
     }
 
-    private void validateOrder(List<Order> orders) {
+    private void validateOrders(List<Order> orders) {
         boolean isAllDrink = orders.stream().allMatch(order -> order.isType(RESTRICTION_MENU_NAME));
         if (isAllDrink) {
             throw new InvalidOrderException(ORDER_RESTRICTIONS);
@@ -46,10 +35,6 @@ public class Orders {
         return BENEFITS_PRICE <= getTotalPrice();
     }
 
-    public boolean isWeekday() {
-        return weekday.contains(orderDate.getDayOfWeek());
-    }
-
     public int countByMenuType(String menuType) {
         return orders.stream()
                 .filter(order -> order.isType(menuType))
@@ -58,27 +43,7 @@ public class Orders {
                 .sum();
     }
 
-    public boolean isSpecialDay() {
-        return isDayEqual(SUNDAY) || isDayEqual(SPECIAL_DAY);
-    }
-
-    private boolean isDayEqual(DayOfWeek dayOfWeek) {
-        return orderDate.getDayOfWeek() == dayOfWeek;
-    }
-
-    private boolean isDayEqual(int day) {
-        return orderDate.getDayOfMonth() == day;
-    }
-
-    public boolean isDayBeforeOrEqual(int day) {
-        return orderDate.getDayOfMonth() <= day;
-    }
-
-    public int getDayOfMonth() {
-        return orderDate.getDayOfMonth();
-    }
-
     public List<Order> getOrders() {
-        return Collections.unmodifiableList(orders);
+        return unmodifiableList(orders);
     }
 }
