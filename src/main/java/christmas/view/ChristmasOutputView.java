@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 import christmas.dto.BenefitsDetailsDto;
-import christmas.dto.BenefitsDto;
 import christmas.dto.PresentsDto;
 import christmas.model.badge.Badge;
 import christmas.model.menu.Menu;
@@ -41,40 +40,34 @@ public class ChristmasOutputView implements OutputView {
     }
 
     @Override
-    public void printBenefits(BenefitsDto benefits) {
-        printBeforeTotalPrice(benefits.beforePrice());
-        printPresentations(benefits.presents());
-        printBenefitsDetails(benefits.isApply(), benefits.benefitsDetailsDto());
-        printTotalBenefits(benefits.totalBenefits());
-        printAfterTotalPrice(benefits.afterPrice());
-    }
-
-    private void printBeforeTotalPrice(int totalPrice) {
+    public void printBeforePrice(int beforePrice) {
         System.out.println("\n<할인 전 총주문 금액>");
-        System.out.println(getFormattedPrice(totalPrice));
+        System.out.println(getFormattedPrice(beforePrice));
     }
 
-    private void printPresentations(PresentsDto presentations) {
+    @Override
+    public void printPresentations(PresentsDto dto) {
         System.out.println("\n<증정 메뉴>");
-        if (presentations.isApply()) {
+        if (!dto.isApply()) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
-        presentations.menus().stream()
+        dto.menus().stream()
                 .collect(groupingBy(Menu::getName, counting()))
                 .forEach((name, count) -> System.out.println(MENU_MESSAGE.formatted(name, count)));
     }
 
-    private void printBenefitsDetails(boolean isApply, BenefitsDetailsDto benefitsDetails) {
+    @Override
+    public void printBenefitsDetails(boolean isApply, BenefitsDetailsDto dto) {
         System.out.println("\n<혜택 내역>");
         if (!isApply) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
         }
-        printDayBenefits(benefitsDetails.dayBenefits());
-        printWeekdayOrWeekendBenefits(benefitsDetails.weekdayBenefits(), benefitsDetails.weekendBenefits());
-        printSpecialDayBenefits(benefitsDetails.specialDayBenefits());
-        printPresentationBenefits(benefitsDetails.presentsBenefits());
+        printDayBenefits(dto.dayBenefits());
+        printWeekdayOrWeekendBenefits(dto.weekdayBenefits(), dto.weekendBenefits());
+        printSpecialDayBenefits(dto.specialDayBenefits());
+        printPresentationBenefits(dto.presentsBenefits());
     }
 
     private void printDayBenefits(int dayBenefits) {
@@ -110,12 +103,14 @@ public class ChristmasOutputView implements OutputView {
         printDiscountPrice(benefit);
     }
 
-    private void printAfterTotalPrice(int totalPrice) {
+    @Override
+    public void printAfterPrice(int afterPrice) {
         System.out.println("\n<할인 후 예상 결제 금액>");
-        System.out.println(getFormattedPrice(totalPrice));
+        System.out.println(getFormattedPrice(afterPrice));
     }
 
-    private void printTotalBenefits(int totalBenefits) {
+    @Override
+    public void printTotalBenefits(int totalBenefits) {
         System.out.println("\n<총혜택 금액>");
         printDiscountPrice(totalBenefits);
     }

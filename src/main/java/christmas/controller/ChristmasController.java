@@ -5,11 +5,9 @@ import static christmas.exception.InvalidMenuException.InvalidMenuError.NOT_EXIS
 import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuRepository;
 import christmas.dto.BenefitsDetailsDto;
-import christmas.dto.BenefitsDto;
 import christmas.dto.MenuDto;
 import christmas.dto.PresentsDto;
 import christmas.exception.InvalidMenuException;
-import christmas.model.price.Price;
 import christmas.model.badge.Badge;
 import christmas.model.benefits.Benefits;
 import christmas.model.benefits.ChristmasBenefits;
@@ -19,6 +17,7 @@ import christmas.model.order.OrderDate;
 import christmas.model.order.Orders;
 import christmas.model.presents.ChristmasPresents;
 import christmas.model.presents.Presents;
+import christmas.model.price.Price;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;
@@ -95,12 +94,15 @@ public class ChristmasController {
 
     private void printBenefits(Orders orders, Benefits benefits, Presents presents) {
         Price price = new Price(orders.getPrice(), benefits.getTotalBenefits(), presents.getPrice());
-        boolean hasBenefits = orders.hasBenefits();
+        boolean isBenefitsApply = orders.hasBenefits();
+        boolean isPresentsApply = orders.hasPresents();
 
-        outputView.printBenefits(BenefitsDto.of(hasBenefits, price,
-                BenefitsDetailsDto.of(benefits, presents),
-                PresentsDto.of(orders.hasPresents(), presents.getMenus())));
-        outputView.printBadge(findBadgeByBenefits(hasBenefits, benefits));
+        outputView.printBeforePrice(price.getBeforePrice());
+        outputView.printPresentations(PresentsDto.of(isPresentsApply, presents.getMenus()));
+        outputView.printBenefitsDetails(isBenefitsApply, BenefitsDetailsDto.of(benefits, presents));
+        outputView.printTotalBenefits(price.getTotalBenefits());
+        outputView.printAfterPrice(price.getAfterPrice());
+        outputView.printBadge(findBadgeByBenefits(isBenefitsApply, benefits));
     }
 
     private Optional<Badge> findBadgeByBenefits(boolean hasBenefits, Benefits benefits) {
