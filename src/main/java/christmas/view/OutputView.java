@@ -35,14 +35,14 @@ public class OutputView {
         }
     }
 
-    public void printBenefits(BenefitsDto benefitsDto) {
-        printBeforeTotalPrice(benefitsDto.beforeTotalPrice());
-        printPresentationMenu(benefitsDto.presentations());
+    public void printBenefits(BenefitsDto benefits) {
+        printBeforeTotalPrice(benefits.beforeTotalPrice());
+        printPresentationMenu(benefits.presentations());
 
-        printBenefitsDetails(benefitsDto.benefitsDetailsDto());
+        printBenefitsDetails(benefits.benefitsDetailsDto());
 
-        printTotalBenefits(benefitsDto.totalBenefits());
-        printAfterTotalPrice(benefitsDto.afterTotalPrice());
+        printTotalBenefits(benefits.totalBenefits());
+        printAfterTotalPrice(benefits.afterTotalPrice());
     }
 
     private void printBeforeTotalPrice(int totalPrice) {
@@ -61,12 +61,16 @@ public class OutputView {
                 .forEach((name, count) -> System.out.println(name + " " + count + "개"));
     }
 
-    private void printBenefitsDetails(BenefitsDetailsDto benefitsDetailsDto) {
+    private void printBenefitsDetails(BenefitsDetailsDto benefitsDetails) {
         System.out.println("\n<혜택 내역>");
-        printDayBenefits(benefitsDetailsDto.dayBenefits());
-        printWeekdayOrWeekendDayBenefits(benefitsDetailsDto.weekdayBenefits(), benefitsDetailsDto.weekendDayBenefits());
-        printSpecialDayBenefits(benefitsDetailsDto.specialDayBenefits());
-        printPresentationBenefits(benefitsDetailsDto.presentationBenefits());
+        if (!benefitsDetails.isBenefits()) {
+            System.out.println("없음");
+            return;
+        }
+        printDayBenefits(benefitsDetails.dayBenefits());
+        printWeekdayOrWeekendDayBenefits(benefitsDetails.weekdayBenefits(), benefitsDetails.weekendDayBenefits());
+        printSpecialDayBenefits(benefitsDetails.specialDayBenefits());
+        printPresentationBenefits(benefitsDetails.presentationBenefits());
     }
 
     private void printDayBenefits(int dayBenefits) {

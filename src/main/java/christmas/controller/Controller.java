@@ -88,7 +88,7 @@ public class Controller {
     }
 
     private void printBenefits(Benefits benefits) {
-        outputView.printBenefits(BenefitsDto.from(benefits));
+        outputView.printBenefits(BenefitsDto.of(benefits, benefits.isApply()));
         outputView.printBadge(findBadgeByBenefits(benefits));
     }
 
