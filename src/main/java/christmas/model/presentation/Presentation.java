@@ -1,12 +1,10 @@
 package christmas.model.presentation;
 
-import christmas.model.order.Orders;
+import java.util.Optional;
 
 public interface Presentation {
 
-    String getPresentationName();
+    Optional<String> getPresentationName();
 
-    int getBenefit(Orders orders);
-
-    boolean isPresentation(Orders orders);
+    int getBenefits();
 }

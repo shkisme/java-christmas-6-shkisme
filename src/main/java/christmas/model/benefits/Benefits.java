@@ -1,17 +1,14 @@
 package christmas.model.benefits;
 
-import christmas.model.order.Orders;
-import java.time.LocalDate;
-
 public interface Benefits {
 
-    int getDayBenefits(LocalDate localDate);
+    int getDayBenefits();
 
-    int getWeekdayBenefits(Orders orders);
+    int getWeekdayBenefits();
 
-    int getWeekendDayBenefits(Orders orders);
+    int getWeekendDayBenefits();
 
-    int getSpecialDayBenefits(LocalDate localDate);
+    int getSpecialDayBenefits();
 
-    int getTotalBenefits(Orders orders);
+    int getTotalBenefits();
 }

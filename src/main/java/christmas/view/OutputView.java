@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.dto.BenefitsDetailsDto;
 import christmas.model.badge.Badge;
 import christmas.model.order.Order;
 import christmas.model.order.Orders;
@@ -18,13 +19,12 @@ public class OutputView {
     }
 
     public void printNoEventResult(Orders orders) {
-        printOrders(orders);
         printBeforeTotalPrice(orders.getTotalPrice());
-        System.out.println("\n<증정 메뉴>\n없음");
+        printPresentationMenu(Optional.empty());
         System.out.println("\n<혜택 내역>\n없음");
         printTotalBenefits(0);
         printAfterTotalPrice(orders.getTotalPrice());
-        System.out.println("\n12월 이벤트 배지\n없음");
+        printBadge(Optional.empty());
     }
 
     public void printOrders(Orders orders) {
@@ -39,19 +39,54 @@ public class OutputView {
         System.out.println(getFormattedPrice(totalPrice));
     }
 
-    public void printPresentationMenu(String presentationName, boolean isPresentation) {
+    public void printPresentationMenu(Optional<String> presentationName) {
         System.out.println("\n<증정 메뉴>");
-        if (isPresentation) {
-            System.out.println(presentationName + " 1개");
+        if (presentationName.isEmpty()) {
+            System.out.println("없음");
             return;
         }
-        System.out.println("없음");
+        System.out.println(presentationName.get() + " 1개");
+    }
+
+    public void printBenefitsDetails(BenefitsDetailsDto benefitsDetailsDto) {
+        System.out.println("\n<혜택 내역>");
+        printDayBenefits(benefitsDetailsDto.dayBenefits());
+        printWeekdayOrWeekendDayBenefits(benefitsDetailsDto.weekdayBenefits(), benefitsDetailsDto.weekendDayBenefits());
+        printSpecialDayBenefits(benefitsDetailsDto.specialDayBenefits());
+        printPresentationBenefits(benefitsDetailsDto.presentationBenefits());
     }
 
     public void printDayBenefits(int dayBenefits) {
-        System.out.println("\n<혜택 내역>");
         System.out.print("크리스마스 디데이 할인: ");
-        printPrice(dayBenefits);
+        printDiscountPrice(dayBenefits);
+    }
+
+    private void printWeekdayOrWeekendDayBenefits(int weekdayBenefits, int weekendDayBenefits) {
+        if (weekendDayBenefits == 0) {
+            printWeekdayBenefits(weekdayBenefits);
+            return;
+        }
+        printWeekendDayBenefits(weekendDayBenefits);
+    }
+
+    public void printWeekdayBenefits(int weekdayBenefits) {
+        System.out.print("평일 할인: ");
+        printDiscountPrice(weekdayBenefits);
+    }
+
+    public void printWeekendDayBenefits(int weekendDayBenefits) {
+        System.out.print("주말 할인: ");
+        printDiscountPrice(weekendDayBenefits);
+    }
+
+    public void printSpecialDayBenefits(int specialDayBenefits) {
+        System.out.print("특별 할인: ");
+        printDiscountPrice(specialDayBenefits);
+    }
+
+    public void printPresentationBenefits(int benefit) {
+        System.out.print("증정 이벤트: ");
+        printDiscountPrice(benefit);
     }
 
     public void printAfterTotalPrice(int totalPrice) {
@@ -59,32 +94,12 @@ public class OutputView {
         System.out.println(getFormattedPrice(totalPrice));
     }
 
-    public void printWeekdayBenefits(int weekdayBenefits) {
-        System.out.print("평일 할인: ");
-        printPrice(weekdayBenefits);
-    }
-
-    public void printWeekendDayBenefits(int weekendDayBenefits) {
-        System.out.print("주말 할인: ");
-        printPrice(weekendDayBenefits);
-    }
-
-    public void printSpecialDayBenefits(int specialDayBenefits) {
-        System.out.print("특별 할인: ");
-        printPrice(specialDayBenefits);
-    }
-
-    public void printPresentationBenefits(int benefit) {
-        System.out.print("증정 이벤트: ");
-        printPrice(benefit);
-    }
-
     public void printTotalBenefits(int totalBenefits) {
         System.out.println("\n<총혜택 금액>");
-        printPrice(totalBenefits);
+        printDiscountPrice(totalBenefits);
     }
 
-    private void printPrice(int price) {
+    private void printDiscountPrice(int price) {
         if (price == 0) {
             System.out.println("없음");
             return;

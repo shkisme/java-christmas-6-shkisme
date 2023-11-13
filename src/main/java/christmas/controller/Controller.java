@@ -2,11 +2,14 @@ package christmas.controller;
 
 import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuRepository;
+import christmas.dto.BenefitsDetailsDto;
 import christmas.dto.MenuDto;
 import christmas.model.benefits.Benefits;
+import christmas.model.benefits.ChristmasBenefits;
 import christmas.model.menu.Menu;
 import christmas.model.order.Order;
 import christmas.model.order.Orders;
+import christmas.model.presentation.ChristmasPresentation;
 import christmas.model.presentation.Presentation;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -17,17 +20,13 @@ public class Controller {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Benefits benefits;
-    private final Presentation presentation;
     private final MenuRepository menuRepository;
     private final BadgeRepository badgeRepository;
 
-    public Controller(InputView inputView, OutputView outputView, Benefits benefits, Presentation presentation,
-                      MenuRepository menuRepository, BadgeRepository badgeRepository) {
+    public Controller(InputView inputView, OutputView outputView, MenuRepository menuRepository,
+                      BadgeRepository badgeRepository) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.benefits = benefits;
-        this.presentation = presentation;
         this.menuRepository = menuRepository;
         this.badgeRepository = badgeRepository;
     }
@@ -36,7 +35,11 @@ public class Controller {
         outputView.printStartMessage();
         LocalDate orderDate = getOrderDate();
         Orders orders = getOrders(orderDate);
-        printResult(orders);
+        Benefits benefits = new ChristmasBenefits(orders);
+        Menu presentationMenu = menuRepository.findByName("샴페인")
+                .orElseThrow(IllegalAccessError::new);
+        Presentation presentation = new ChristmasPresentation(presentationMenu, orders);
+        printResult(orders, benefits, presentation);
     }
 
     private LocalDate getOrderDate() {
@@ -70,31 +73,21 @@ public class Controller {
                 .orElseThrow(() -> new IllegalArgumentException("메뉴판에 없는 유효하지 않은 주문입니다. 다시 입력해 주세요."));
     }
 
-    private void printResult(Orders orders) {
+    private void printResult(Orders orders, Benefits benefits, Presentation presentation) {
         outputView.printResultMessage();
+        outputView.printOrders(orders);
         if (orders.isNoBenefits()) {
             outputView.printNoEventResult(orders);
             return;
         }
-        outputView.printOrders(orders);
         int beforePrice = orders.getTotalPrice();
         outputView.printBeforeTotalPrice(beforePrice);
-        outputView.printPresentationMenu(presentation.getPresentationName(), presentation.isPresentation(orders));
-        outputView.printDayBenefits(benefits.getDayBenefits(orders.getOrderDate()));
-        printWeekOrWeekendBenefits(orders);
-        outputView.printSpecialDayBenefits(benefits.getSpecialDayBenefits(orders.getOrderDate()));
-        outputView.printPresentationBenefits(presentation.getBenefit(orders));
-        outputView.printTotalBenefits(benefits.getTotalBenefits(orders) + presentation.getBenefit(orders));
-        outputView.printAfterTotalPrice(beforePrice - benefits.getTotalBenefits(orders));
-        outputView.printBadge(
-                badgeRepository.findByPrice(benefits.getTotalBenefits(orders) + presentation.getBenefit(orders)));
-    }
+        outputView.printPresentationMenu(presentation.getPresentationName());
 
-    private void printWeekOrWeekendBenefits(Orders orders) {
-        if (orders.isWeekday()) {
-            outputView.printWeekdayBenefits(benefits.getWeekdayBenefits(orders));
-            return;
-        }
-        outputView.printWeekendDayBenefits(benefits.getWeekendDayBenefits(orders));
+        outputView.printBenefitsDetails(BenefitsDetailsDto.of(benefits, presentation));
+
+        outputView.printTotalBenefits(benefits.getTotalBenefits() + presentation.getBenefits());
+        outputView.printAfterTotalPrice(beforePrice - benefits.getTotalBenefits());
+        outputView.printBadge(badgeRepository.findByPrice(benefits.getTotalBenefits() + presentation.getBenefits()));
     }
 }

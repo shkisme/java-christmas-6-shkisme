@@ -54,11 +54,27 @@ public class Orders {
                 .sum();
     }
 
-    public List<Order> getOrders() {
-        return Collections.unmodifiableList(orders);
+    public boolean isSpecialDay() {
+        return isDayEqual(SUNDAY) || isDayEqual(25);
     }
 
-    public LocalDate getOrderDate() {
-        return orderDate;
+    private boolean isDayEqual(DayOfWeek dayOfWeek) {
+        return orderDate.getDayOfWeek() == dayOfWeek;
+    }
+
+    private boolean isDayEqual(int day) {
+        return orderDate.getDayOfMonth() == day;
+    }
+
+    public boolean isDayBeforeOfEqual(int day) {
+        return orderDate.getDayOfMonth() <= day;
+    }
+
+    public int getDayOfMonth() {
+        return orderDate.getDayOfMonth();
+    }
+
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders);
     }
 }
