@@ -3,7 +3,7 @@ package christmas.model.benefits;
 import christmas.model.menu.Menu;
 import christmas.model.order.OrderDate;
 import christmas.model.order.Orders;
-import christmas.model.presentation.Presentation;
+import christmas.model.presents.Presents;
 import java.util.List;
 
 public class ChristmasBenefits implements Benefits {
@@ -11,12 +11,12 @@ public class ChristmasBenefits implements Benefits {
     private static final String WEEKDAY_MENU_NAME = "디저트";
     private static final String WEEKEND_MENU_NAME = "메인";
 
-    private final Presentation presentation;
-z    private final Orders orders;
+    private final Presents presents;
+    private final Orders orders;
     private final OrderDate orderDate;
 
-    public ChristmasBenefits(Presentation presentation, Orders orders, OrderDate orderDate) {
-        this.presentation = presentation;
+    public ChristmasBenefits(Presents presents, Orders orders, OrderDate orderDate) {
+        this.presents = presents;
         this.orders = orders;
         this.orderDate = orderDate;
     }
@@ -69,7 +69,7 @@ z    private final Orders orders;
 
     @Override
     public int getTotalBenefits() {
-        return getTotalBenefitsWithoutPresentation() + getPresentationBenefits();
+        return getTotalBenefitsWithoutPresentation() + getPresentBenefits();
     }
 
     @Override
@@ -82,17 +82,17 @@ z    private final Orders orders;
     }
 
     @Override
-    public List<Menu> getPresentations() {
-        return presentation.getMenus();
+    public List<Menu> getPresents() {
+        return presents.getMenus();
     }
 
     @Override
-    public int getPresentationBenefits() {
-        return presentation.getBenefits();
+    public int getPresentBenefits() {
+        return presents.getBenefits();
     }
 
     @Override
-    public boolean isPresentApply() {
-        return presentation.isApply();
+    public boolean isPresentsApply() {
+        return presents.isApply();
     }
 }

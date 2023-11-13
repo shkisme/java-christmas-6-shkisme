@@ -14,8 +14,8 @@ import christmas.model.menu.Menu;
 import christmas.model.order.Order;
 import christmas.model.order.OrderDate;
 import christmas.model.order.Orders;
-import christmas.model.presentation.ChristmasPresentation;
-import christmas.model.presentation.Presentation;
+import christmas.model.presents.ChristmasPresents;
+import christmas.model.presents.Presents;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;
@@ -42,8 +42,8 @@ public class ChristmasController {
         OrderDate orderDate = readDate();
         Orders orders = readOrders();
 
-        Presentation presentation = createPresentation(orders);
-        Benefits benefits = new ChristmasBenefits(presentation, orders, orderDate);
+        Presents presents = createPresentation(orders);
+        Benefits benefits = new ChristmasBenefits(presents, orders, orderDate);
 
         printOrders(orders);
         printBenefits(benefits);
@@ -75,9 +75,9 @@ public class ChristmasController {
         return new Orders(orders);
     }
 
-    private Presentation createPresentation(Orders orders) {
+    private Presents createPresentation(Orders orders) {
         Menu presentation = findMenuByName(PRESENTATION_MENU_NAME);
-        return new ChristmasPresentation(List.of(presentation), orders);
+        return new ChristmasPresents(List.of(presentation), orders);
     }
 
     private Menu findMenuByName(String name) {

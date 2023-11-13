@@ -21,9 +21,9 @@ public interface Benefits {
 
     int getTotalBenefits();
 
-    List<Menu> getPresentations();
+    List<Menu> getPresents();
 
-    int getPresentationBenefits();
+    int getPresentBenefits();
 
-    boolean isPresentApply();
+    boolean isPresentsApply();
 }

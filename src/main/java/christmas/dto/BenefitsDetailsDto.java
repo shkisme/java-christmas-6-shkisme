@@ -7,6 +7,6 @@ public record BenefitsDetailsDto(boolean isApply, int dayBenefits,
                                  int specialDayBenefits, int presentationBenefits) {
     public static BenefitsDetailsDto of(boolean isApply, Benefits benefits) {
         return new BenefitsDetailsDto(isApply, benefits.getDayBenefits(), benefits.getWeekdayBenefits(),
-                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), benefits.getPresentationBenefits());
+                benefits.getWeekendBenefits(), benefits.getSpecialDayBenefits(), benefits.getPresentBenefits());
     }
 }

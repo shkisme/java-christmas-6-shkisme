@@ -1,4 +1,4 @@
-package christmas.model.presentation;
+package christmas.model.presents;
 
 import static java.util.Collections.unmodifiableList;
 
@@ -6,23 +6,23 @@ import christmas.model.menu.Menu;
 import christmas.model.order.Orders;
 import java.util.List;
 
-public class ChristmasPresentation implements Presentation {
-    private final List<Menu> presentations;
+public class ChristmasPresents implements Presents {
+    private final List<Menu> presents;
     private final Orders orders;
 
-    public ChristmasPresentation(List<Menu> presentations, Orders orders) {
-        this.presentations = presentations;
+    public ChristmasPresents(List<Menu> presents, Orders orders) {
+        this.presents = presents;
         this.orders = orders;
     }
 
     @Override
     public List<Menu> getMenus() {
-        return unmodifiableList(presentations);
+        return unmodifiableList(presents);
     }
 
     @Override
     public int getBenefits() {
-        return presentations.stream()
+        return presents.stream()
                 .map(Menu::getPrice)
                 .mapToInt(Integer::intValue)
                 .sum();

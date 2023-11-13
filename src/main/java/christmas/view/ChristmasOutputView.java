@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.groupingBy;
 
 import christmas.dto.BenefitsDetailsDto;
 import christmas.dto.BenefitsDto;
-import christmas.dto.PresentationsDto;
+import christmas.dto.PresentsDto;
 import christmas.model.badge.Badge;
 import christmas.model.menu.Menu;
 import christmas.model.order.Order;
@@ -43,7 +43,7 @@ public class ChristmasOutputView implements OutputView {
     @Override
     public void printBenefits(BenefitsDto benefits) {
         printBeforeTotalPrice(benefits.beforeTotalPrice());
-        printPresentations(benefits.presentations());
+        printPresentations(benefits.presents());
 
         printBenefitsDetails(benefits.benefitsDetailsDto());
 
@@ -56,7 +56,7 @@ public class ChristmasOutputView implements OutputView {
         System.out.println(getFormattedPrice(totalPrice));
     }
 
-    private void printPresentations(PresentationsDto presentations) {
+    private void printPresentations(PresentsDto presentations) {
         System.out.println("\n<증정 메뉴>");
         if (presentations.isApply()) {
             System.out.println(NOT_EXIST_MESSAGE);
