@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MenuEnumRepositoryTest extends ApplicationTest {
+public class MenuRepositoryTest extends ApplicationTest {
 
     @Test
     @DisplayName("이름으로 메뉴를 조회한다.")
