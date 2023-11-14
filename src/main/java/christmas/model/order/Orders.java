@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Set;
 
 public class Orders {
-    static final int MIN_COUNT = 1;
-    static final int MAX_COUNT = 20;
     private static final String RESTRICTION_MENU_NAME = "음료";
     private static final int BENEFITS_PRICE = 10_000;
     private static final int PRESENTS_PRICE = 120_000;
+    static final int MIN_COUNT = 1;
+    static final int MAX_COUNT = 20;
 
     private final List<Order> orders;
 

@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface OutputView {
 
-    void printStartMessage();
-
-    void printResultMessage();
+    void printResultMessage(int date);
 
     void printOrders(Orders orders);
 

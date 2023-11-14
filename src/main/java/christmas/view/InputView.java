@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface InputView {
 
+    void printStartMessage();
+
     int readDate();
 
     List<MenuDto> readMenu();

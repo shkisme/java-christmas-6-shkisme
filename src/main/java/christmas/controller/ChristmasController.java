@@ -40,14 +40,14 @@ public class ChristmasController {
     }
 
     public void run() {
-        outputView.printStartMessage();
+        inputView.printStartMessage();
         OrderDate orderDate = readDate();
         Orders orders = readOrders();
 
         Presents presents = createPresentation();
         Benefits benefits = new ChristmasBenefits(orders, orderDate);
 
-        printOrders(orders);
+        printOrders(orders, orderDate);
         printBenefits(orders, benefits, presents);
     }
 
@@ -87,8 +87,8 @@ public class ChristmasController {
                 .orElseThrow(() -> new InvalidMenuException(NOT_EXIST));
     }
 
-    private void printOrders(Orders orders) {
-        outputView.printResultMessage();
+    private void printOrders(Orders orders, OrderDate orderDate) {
+        outputView.printResultMessage(orderDate.getDayOfMonth());
         outputView.printOrders(orders);
     }
 
