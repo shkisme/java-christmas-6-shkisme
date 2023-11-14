@@ -12,7 +12,14 @@ import java.util.List;
 
 public class OrderDate {
     private static final List<DayOfWeek> WEEKDAY = List.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, SUNDAY);
-    private static final List<Integer> STAR_DAY = List.of(3, 10, 17, 24, 25, 31);
+    private static final List<LocalDate> STAR_DAY = List.of(
+            LocalDate.of(2023, 12, 3),
+            LocalDate.of(2023, 12, 10),
+            LocalDate.of(2023, 12, 17),
+            LocalDate.of(2023, 12, 24),
+            LocalDate.of(2023, 12, 25),
+            LocalDate.of(2023, 12, 31)
+    );
 
     private final LocalDate date;
 
@@ -29,7 +36,7 @@ public class OrderDate {
     }
 
     public boolean isStarDay() {
-        return STAR_DAY.contains(date.getDayOfMonth());
+        return STAR_DAY.contains(date);
     }
 
     public boolean isBeforeOrEqual(int day) {
