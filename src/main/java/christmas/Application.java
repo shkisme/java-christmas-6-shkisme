@@ -12,8 +12,12 @@ import christmas.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        ChristmasController christmasController = new ChristmasController(getInputView(), getOutputView(),
-                getMenuRepository(), getBadgeRepository());
+        ChristmasController christmasController = new ChristmasController(
+                getInputView(),
+                getOutputView(),
+                getMenuRepository(),
+                getBadgeRepository()
+        );
         christmasController.run();
     }
 

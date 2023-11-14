@@ -100,14 +100,14 @@ public class ChristmasController {
         outputView.printBeforePrice(price.getBeforePrice());
         outputView.printPresentations(PresentsDto.of(isPresentsApply, presents.getMenus()));
         outputView.printBenefitsDetails(isBenefitsApply, BenefitsDetailsDto.of(benefits, presents));
-        outputView.printTotalBenefits(price.getTotalBenefits());
+        outputView.printTotalBenefits(isBenefitsApply, price.getTotalBenefits());
         outputView.printAfterPrice(price.getAfterPrice());
-        outputView.printBadge(findBadgeByBenefits(isBenefitsApply, benefits));
+        outputView.printBadge(findBadgeByBenefits(isBenefitsApply, price.getTotalBenefits()));
     }
 
-    private Optional<Badge> findBadgeByBenefits(boolean hasBenefits, Benefits benefits) {
+    private Optional<Badge> findBadgeByBenefits(boolean hasBenefits, int totalBenefits) {
         if (hasBenefits) {
-            return badgeRepository.findByPrice(benefits.getTotalBenefits());
+            return badgeRepository.findByPrice(totalBenefits);
         }
         return Optional.empty();
     }

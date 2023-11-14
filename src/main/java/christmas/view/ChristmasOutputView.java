@@ -110,14 +110,18 @@ public class ChristmasOutputView implements OutputView {
     }
 
     @Override
-    public void printTotalBenefits(int totalBenefits) {
+    public void printTotalBenefits(boolean isApply, int totalBenefits) {
         System.out.println("\n<총혜택 금액>");
-        printDiscountPrice(totalBenefits);
+        if (isApply) {
+            printDiscountPrice(totalBenefits);
+            return;
+        }
+        printDiscountPrice(0);
     }
 
     private void printDiscountPrice(int price) {
         if (price == 0) {
-            System.out.println(NOT_EXIST_MESSAGE);
+            System.out.println(getFormattedPrice(price));
             return;
         }
         System.out.println("-" + getFormattedPrice(price));

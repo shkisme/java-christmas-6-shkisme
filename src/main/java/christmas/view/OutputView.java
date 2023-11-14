@@ -20,7 +20,7 @@ public interface OutputView {
 
     void printBenefitsDetails(boolean isApply, BenefitsDetailsDto dto);
 
-    void printTotalBenefits(int totalBenefits);
+    void printTotalBenefits(boolean isApply, int totalBenefits);
 
     void printAfterPrice(int afterPrice);
 
