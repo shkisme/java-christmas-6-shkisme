@@ -6,11 +6,18 @@ import static christmas.exception.InvalidMenuException.InvalidMenuError.INVALID_
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import christmas.dao.badge.BadgeEnumRepository;
+import christmas.dao.badge.BadgeRepository;
+import christmas.dao.menu.MenuEnumRepository;
+import christmas.dao.menu.MenuRepository;
 import org.junit.jupiter.api.Test;
 
-class ApplicationTest extends NsTest {
-    private static final String ERROR_MESSAGE = "[ERROR] ";
-    private static final String LINE_SEPARATOR = System.lineSeparator();
+public class ApplicationTest extends NsTest {
+    protected static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
+    protected static final String LINE_SEPARATOR = System.lineSeparator();
+
+    protected final MenuRepository menuRepository = new MenuEnumRepository();
+    protected final BadgeRepository badgeRepository = new BadgeEnumRepository();
 
     @Test
     void 모든_타이틀_출력() {
@@ -40,7 +47,7 @@ class ApplicationTest extends NsTest {
     void 날짜_예외_테스트() {
         assertSimpleTest(() -> {
             runException("a");
-            assertThat(output()).contains(ERROR_MESSAGE, INVALID_NUMBER.getMessage());
+            assertThat(output()).contains(ERROR_MESSAGE_PREFIX, INVALID_NUMBER.getMessage());
         });
     }
 
@@ -48,7 +55,7 @@ class ApplicationTest extends NsTest {
     void 주문_예외_테스트() {
         assertSimpleTest(() -> {
             runException("3", "제로콜라-a");
-            assertThat(output()).contains(ERROR_MESSAGE, INVALID_FORMAT.getMessage());
+            assertThat(output()).contains(ERROR_MESSAGE_PREFIX, INVALID_FORMAT.getMessage());
         });
     }
 
