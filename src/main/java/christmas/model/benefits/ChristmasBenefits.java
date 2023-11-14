@@ -46,7 +46,7 @@ public class ChristmasBenefits implements Benefits {
 
     @Override
     public int getSpecialDayBenefits() {
-        if (orderDate.isSpecialDay()) {
+        if (orderDate.isStarDay()) {
             return 1000;
         }
         return 0;

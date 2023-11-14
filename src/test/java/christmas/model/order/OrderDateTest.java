@@ -43,7 +43,7 @@ public class OrderDateTest {
         OrderDate orderDate = OrderDate.of(year, month, date);
 
         //when
-        boolean isSpecialDay = orderDate.isSpecialDay();
+        boolean isSpecialDay = orderDate.isStarDay();
 
         //then
         assertThat(isSpecialDay).isEqualTo(expected);

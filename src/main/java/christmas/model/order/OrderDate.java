@@ -11,8 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class OrderDate {
-    private static final List<DayOfWeek> weekday = List.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, SUNDAY);
-    private static final int SPECIAL_DAY = 25;
+    private static final List<DayOfWeek> WEEKDAY = List.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, SUNDAY);
+    private static final List<Integer> STAR_DAY = List.of(3, 10, 17, 24, 25, 31);
 
     private final LocalDate date;
 
@@ -25,19 +25,11 @@ public class OrderDate {
     }
 
     public boolean isWeekday() {
-        return weekday.contains(date.getDayOfWeek());
+        return WEEKDAY.contains(date.getDayOfWeek());
     }
 
-    public boolean isSpecialDay() {
-        return isDayEqual(SUNDAY) || isDayEqual(SPECIAL_DAY);
-    }
-
-    private boolean isDayEqual(DayOfWeek dayOfWeek) {
-        return date.getDayOfWeek() == dayOfWeek;
-    }
-
-    private boolean isDayEqual(int day) {
-        return date.getDayOfMonth() == day;
+    public boolean isStarDay() {
+        return STAR_DAY.contains(date.getDayOfMonth());
     }
 
     public boolean isBeforeOrEqual(int day) {
