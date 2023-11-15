@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface OutputView {
 
+    String LINE_SEPARATOR = System.lineSeparator();
+
     void printResultMessage(int date);
 
     void printOrders(Orders orders);

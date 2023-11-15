@@ -24,7 +24,7 @@ public class ChristmasOutputView implements OutputView {
 
     @Override
     public void printOrders(Orders orders) {
-        System.out.println("\n<주문 메뉴>");
+        System.out.println(LINE_SEPARATOR + "<주문 메뉴>");
         for (Order order : orders.getOrders()) {
             System.out.println(MENU_MESSAGE.formatted(order.getMenuName(), order.getCount()));
         }
@@ -32,13 +32,13 @@ public class ChristmasOutputView implements OutputView {
 
     @Override
     public void printBeforePrice(int beforePrice) {
-        System.out.println("\n<할인 전 총주문 금액>");
+        System.out.println(LINE_SEPARATOR + "<할인 전 총주문 금액>");
         System.out.println(getFormattedPrice(beforePrice));
     }
 
     @Override
     public void printPresentations(PresentsDto dto) {
-        System.out.println("\n<증정 메뉴>");
+        System.out.println(LINE_SEPARATOR + "<증정 메뉴>");
         if (!dto.isApply()) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
@@ -50,7 +50,7 @@ public class ChristmasOutputView implements OutputView {
 
     @Override
     public void printBenefitsDetails(boolean isApply, BenefitsDetailsDto dto) {
-        System.out.println("\n<혜택 내역>");
+        System.out.println(LINE_SEPARATOR + "<혜택 내역>");
         if (!isApply) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
@@ -96,13 +96,13 @@ public class ChristmasOutputView implements OutputView {
 
     @Override
     public void printAfterPrice(int afterPrice) {
-        System.out.println("\n<할인 후 예상 결제 금액>");
+        System.out.println(LINE_SEPARATOR + "<할인 후 예상 결제 금액>");
         System.out.println(getFormattedPrice(afterPrice));
     }
 
     @Override
     public void printTotalBenefits(boolean isApply, int totalBenefits) {
-        System.out.println("\n<총혜택 금액>");
+        System.out.println(LINE_SEPARATOR + "<총혜택 금액>");
         if (isApply) {
             printDiscountPrice(totalBenefits);
             return;
@@ -125,7 +125,7 @@ public class ChristmasOutputView implements OutputView {
 
     @Override
     public void printBadge(Optional<Badge> badge) {
-        System.out.println("\n<12월 이벤트 배지>");
+        System.out.println(LINE_SEPARATOR + "<12월 이벤트 배지>");
         if (badge.isEmpty()) {
             System.out.println(NOT_EXIST_MESSAGE);
             return;
