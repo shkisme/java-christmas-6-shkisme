@@ -1,6 +1,6 @@
 package christmas.model.order;
 
-import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_COUNT;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.ApplicationTest;
@@ -19,7 +19,7 @@ public class OrderTest extends ApplicationTest {
         //when & then
         assertThatThrownBy(() -> new Order(초코케이크, 0))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(INVALID_COUNT.getMessage());
+                .hasMessageContaining(INVALID_ORDER.getMessage());
     }
 
     @Test
@@ -31,6 +31,6 @@ public class OrderTest extends ApplicationTest {
         //when & then
         assertThatThrownBy(() -> new Order(초코케이크, 21))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(INVALID_COUNT.getMessage());
+                .hasMessageContaining(INVALID_ORDER.getMessage());
     }
 }

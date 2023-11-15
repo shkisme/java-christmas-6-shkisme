@@ -1,8 +1,6 @@
 package christmas.model.order;
 
-import static christmas.exception.InvalidOrderException.InvalidOrderError.DUPLICATE;
-import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_COUNT;
-import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_TYPE;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 import static java.util.Collections.unmodifiableList;
 
 import christmas.exception.InvalidOrderException;
@@ -29,21 +27,21 @@ public class Orders {
     private void validateType(List<Order> orders) {
         boolean isAllDrink = orders.stream().allMatch(order -> order.isType(RESTRICTION_MENU_NAME));
         if (isAllDrink) {
-            throw new InvalidOrderException(INVALID_TYPE);
+            throw new InvalidOrderException(INVALID_ORDER);
         }
     }
 
     private void validateDuplicate(List<Order> orders) {
         Set<Order> nonDuplicateOrder = new HashSet<>(orders);
         if (nonDuplicateOrder.size() != orders.size()) {
-            throw new InvalidOrderException(DUPLICATE);
+            throw new InvalidOrderException(INVALID_ORDER);
         }
     }
 
     private void validateCount(List<Order> orders) {
         int menuCountSum = getMenuCountSum(orders);
         if (menuCountSum < MIN_COUNT || MAX_COUNT < menuCountSum) {
-            throw new InvalidOrderException(INVALID_COUNT);
+            throw new InvalidOrderException(INVALID_ORDER);
         }
     }
 

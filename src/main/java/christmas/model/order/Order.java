@@ -1,6 +1,6 @@
 package christmas.model.order;
 
-import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_COUNT;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 import static christmas.model.order.Orders.MAX_COUNT;
 import static christmas.model.order.Orders.MIN_COUNT;
 
@@ -20,7 +20,7 @@ public class Order {
 
     private void validateCount(int count) {
         if (count < MIN_COUNT || MAX_COUNT < count) {
-            throw new InvalidOrderException(INVALID_COUNT);
+            throw new InvalidOrderException(INVALID_ORDER);
         }
     }
 

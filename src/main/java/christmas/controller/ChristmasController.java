@@ -1,13 +1,13 @@
 package christmas.controller;
 
-import static christmas.exception.InvalidMenuException.InvalidMenuError.NOT_EXIST;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 
 import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuRepository;
 import christmas.dto.BenefitsDetailsDto;
 import christmas.dto.MenuDto;
 import christmas.dto.PresentsDto;
-import christmas.exception.InvalidMenuException;
+import christmas.exception.InvalidOrderException;
 import christmas.model.badge.Badge;
 import christmas.model.benefits.Benefits;
 import christmas.model.benefits.ChristmasBenefits;
@@ -84,7 +84,7 @@ public class ChristmasController {
 
     private Menu findMenuByName(String name) {
         return menuRepository.findByName(name)
-                .orElseThrow(() -> new InvalidMenuException(NOT_EXIST));
+                .orElseThrow(() -> new InvalidOrderException(INVALID_ORDER));
     }
 
     private void printOrders(Orders orders, OrderDate orderDate) {

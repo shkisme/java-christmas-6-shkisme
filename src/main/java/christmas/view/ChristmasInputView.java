@@ -1,16 +1,11 @@
 package christmas.view;
 
-import static christmas.exception.InvalidDateException.InvalidDateError.INVALID_NUMBER;
-import static christmas.exception.InvalidDateException.InvalidDateError.INVALID_RANGE;
-import static christmas.exception.InvalidMenuException.InvalidMenuError.INVALID_FORMAT;
-import static christmas.exception.InvalidMenuException.InvalidMenuError.ZERO_COUNT;
-import static christmas.exception.InvalidOrderException.InvalidOrderError.DUPLICATE;
-import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_COUNT;
+import static christmas.exception.InvalidDateException.InvalidDateError.INVALID_DATE;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.dto.MenuDto;
 import christmas.exception.InvalidDateException;
-import christmas.exception.InvalidMenuException;
 import christmas.exception.InvalidOrderException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -63,14 +58,14 @@ public class ChristmasInputView implements InputView {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new InvalidDateException(INVALID_NUMBER);
+            throw new InvalidDateException(INVALID_DATE);
         }
     }
 
     private void validateRange(String input) {
         int date = Integer.parseInt(input);
         if (date < MIN_DATE || MAX_DATE < date) {
-            throw new InvalidDateException(INVALID_RANGE);
+            throw new InvalidDateException(INVALID_DATE);
         }
     }
 
@@ -99,7 +94,7 @@ public class ChristmasInputView implements InputView {
                 .forEach(menu -> {
                     Matcher matcher = MENU.matcher(menu);
                     if (!matcher.matches()) {
-                        throw new InvalidMenuException(INVALID_FORMAT);
+                        throw new InvalidOrderException(INVALID_ORDER);
                     }
                 });
     }
@@ -107,7 +102,7 @@ public class ChristmasInputView implements InputView {
     private void validateCount(String input) {
         int menuCountSum = getMenuCountSum(input);
         if (MAX_MENU_COUNT < menuCountSum) {
-            throw new InvalidOrderException(INVALID_COUNT);
+            throw new InvalidOrderException(INVALID_ORDER);
         }
     }
 
@@ -122,7 +117,7 @@ public class ChristmasInputView implements InputView {
     private int validateNonZero(String input) {
         int value = Integer.parseInt(input);
         if (value == 0) {
-            throw new InvalidMenuException(ZERO_COUNT);
+            throw new InvalidOrderException(INVALID_ORDER);
         }
         return value;
     }
@@ -131,7 +126,7 @@ public class ChristmasInputView implements InputView {
         List<String> menuNames = getMenuNames(input);
         Set<String> nonDuplicateMenuNames = new HashSet<>(menuNames);
         if (menuNames.size() != nonDuplicateMenuNames.size()) {
-            throw new InvalidOrderException(DUPLICATE);
+            throw new InvalidOrderException(INVALID_ORDER);
         }
     }
 

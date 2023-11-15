@@ -1,8 +1,6 @@
 package christmas.model.order;
 
-import static christmas.exception.InvalidOrderException.InvalidOrderError.DUPLICATE;
-import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_COUNT;
-import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_TYPE;
+import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -38,7 +36,7 @@ public class OrdersTest extends ApplicationTest {
         //when & then
         assertThatThrownBy(() -> new Orders(List.of(음료주문)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(INVALID_TYPE.getMessage());
+                .hasMessageContaining(INVALID_ORDER.getMessage());
     }
 
     @Test
@@ -62,7 +60,7 @@ public class OrdersTest extends ApplicationTest {
         //when & then
         assertThatThrownBy(() -> new Orders(List.of(초코케이크주문, 중복주문)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(DUPLICATE.getMessage());
+                .hasMessageContaining(INVALID_ORDER.getMessage());
     }
 
     @Test
@@ -75,7 +73,7 @@ public class OrdersTest extends ApplicationTest {
         //when & then
         assertThatThrownBy(() -> new Orders(List.of(음료주문, 초코케이크주문)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(INVALID_COUNT.getMessage());
+                .hasMessageContaining(INVALID_ORDER.getMessage());
     }
 
     @Test
