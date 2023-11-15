@@ -78,8 +78,8 @@ public class ChristmasController {
     }
 
     private Presents createPresentation() {
-        Menu presentation = findMenuByName(PRESENTS_MENU_NAME);
-        return new ChristmasPresents(List.of(presentation));
+        Menu presents = findMenuByName(PRESENTS_MENU_NAME);
+        return new ChristmasPresents(List.of(presents));
     }
 
     private Menu findMenuByName(String name) {
