@@ -5,7 +5,9 @@ import static christmas.exception.InvalidDateException.InvalidDateError.INVALID_
 import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import camp.nextstep.edu.missionutils.Console;
 import christmas.ApplicationTest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class ChristmasInputViewTest extends ApplicationTest {
+
+    @AfterEach
+    void closeConsole() {
+        Console.close();
+    }
 
     @Test
     @DisplayName("정상 입력 테스트")

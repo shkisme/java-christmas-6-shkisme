@@ -3,11 +3,18 @@ package christmas.view;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import camp.nextstep.edu.missionutils.Console;
 import christmas.ApplicationTest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ChristmasOutputViewTest extends ApplicationTest {
+
+    @AfterEach
+    void closeConsole() {
+        Console.close();
+    }
 
     @Test
     @DisplayName("안내 문구를 출력한다.")
