@@ -5,11 +5,13 @@ import static christmas.exception.InvalidDateException.InvalidDateError.INVALID_
 import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import christmas.dao.badge.BadgeEnumRepository;
 import christmas.dao.badge.BadgeRepository;
 import christmas.dao.menu.MenuEnumRepository;
 import christmas.dao.menu.MenuRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,11 @@ public class ApplicationTest extends NsTest {
 
     protected final MenuRepository menuRepository = new MenuEnumRepository();
     protected final BadgeRepository badgeRepository = new BadgeEnumRepository();
+
+    @AfterEach
+    void closeConsole() {
+        Console.close();
+    }
 
     @Test
     void 모든_타이틀_출력() {
