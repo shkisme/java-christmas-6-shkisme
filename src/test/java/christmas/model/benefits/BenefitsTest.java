@@ -3,7 +3,8 @@ package christmas.model.benefits;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import christmas.ApplicationTest;
+import christmas.dao.menu.MenuEnumRepository;
+import christmas.dao.menu.MenuRepository;
 import christmas.model.menu.Menu;
 import christmas.model.order.Order;
 import christmas.model.order.OrderDate;
@@ -16,8 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class BenefitsTest extends ApplicationTest {
+public class BenefitsTest {
 
+    private final MenuRepository menuRepository = new MenuEnumRepository();
     private Benefits benefits;
 
     @Nested

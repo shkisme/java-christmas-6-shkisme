@@ -5,16 +5,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import christmas.ApplicationTest;
+import christmas.dao.menu.MenuEnumRepository;
+import christmas.dao.menu.MenuRepository;
 import christmas.model.menu.Menu;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class OrdersTest extends ApplicationTest {
+public class OrdersTest {
     private static final int BENEFITS_PRICE = 10_000;
     private static final int PRESENTATION_PRICE = 120_000;
+
+    private final MenuRepository menuRepository = new MenuEnumRepository();
 
     private Menu 샴페인;
     private Menu 초코케이크;

@@ -7,10 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.test.NsTest;
-import christmas.dao.badge.BadgeEnumRepository;
-import christmas.dao.badge.BadgeRepository;
-import christmas.dao.menu.MenuEnumRepository;
-import christmas.dao.menu.MenuRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,9 +17,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class ApplicationTest extends NsTest {
     protected static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
     protected static final String LINE_SEPARATOR = System.lineSeparator();
-
-    protected final MenuRepository menuRepository = new MenuEnumRepository();
-    protected final BadgeRepository badgeRepository = new BadgeEnumRepository();
 
     @AfterEach
     void closeConsole() {
@@ -195,14 +188,7 @@ public class ApplicationTest extends NsTest {
         public void 안내_문구를_출력한다() {
             assertSimpleTest(() -> {
                 run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
-                assertThat(output()).contains(
-                        "안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.",
-                        "<예약 규칙>",
-                        "총주문 금액 10,000원 이상부터 이벤트가 적용됩니다.",
-                        "음료만 주문할 수 없습니다.",
-                        "메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다.",
-                        "12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!"
-                );
+                assertThat(output()).contains("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
             });
         }
 

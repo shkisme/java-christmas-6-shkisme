@@ -3,12 +3,15 @@ package christmas.model.order;
 import static christmas.exception.InvalidOrderException.InvalidOrderError.INVALID_ORDER;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.ApplicationTest;
+import christmas.dao.menu.MenuEnumRepository;
+import christmas.dao.menu.MenuRepository;
 import christmas.model.menu.Menu;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class OrderTest extends ApplicationTest {
+public class OrderTest {
+
+    private final MenuRepository menuRepository = new MenuEnumRepository();
 
     @Test
     @DisplayName("주문 개수가 최소값 미만이면 에러가 발생한다.")

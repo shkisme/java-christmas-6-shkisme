@@ -3,7 +3,8 @@ package christmas.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import christmas.ApplicationTest;
+import christmas.dao.badge.BadgeEnumRepository;
+import christmas.dao.badge.BadgeRepository;
 import christmas.model.badge.Badge;
 import christmas.model.badge.BadgeData;
 import java.util.Optional;
@@ -12,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class BadgeRepositoryTest extends ApplicationTest {
+public class BadgeRepositoryTest {
+
+    private final BadgeRepository badgeRepository = new BadgeEnumRepository();
 
     @ParameterizedTest
     @CsvSource(value = {

@@ -2,13 +2,16 @@ package christmas.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.ApplicationTest;
+import christmas.dao.menu.MenuEnumRepository;
+import christmas.dao.menu.MenuRepository;
 import christmas.model.menu.Menu;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MenuRepositoryTest extends ApplicationTest {
+public class MenuRepositoryTest {
+
+    private final MenuRepository menuRepository = new MenuEnumRepository();
 
     @Test
     @DisplayName("이름으로 메뉴를 조회한다.")
